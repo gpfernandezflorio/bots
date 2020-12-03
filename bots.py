@@ -14,6 +14,7 @@ id_servidor = os.getenv('DISCORD_GUILD_'+servidor)
 id_canal_noriega = os.getenv('DISCORD_CH_'+servidor+'_NORIEGA')
 id_canal_general = os.getenv('DISCORD_CH_'+servidor+'_GENERAL')
 
+servidor_conectado = None
 canal_noriega = None
 canal_general = None
 hora_mensaje_cierre = [17,55] # A esta hora mando "en 5 cierra la noriega"
@@ -48,6 +49,12 @@ async def on_message(message): # Cuando alguien dice "q onda?", respondo lo mism
 async def en_5_cierra_la_noriega(): # Una vez por día mando el aviso de que se cierra la noriega
     if canal_noriega:
         await canal_noriega.send(mensaje_cierre)
+        if servidor_conectado:
+            await asyncio.sleep(4*60)
+            try:
+                await canal_noriega.set_permissions(servidor_conectado.default_role, send_messages=False)
+            except Exception as e:
+                pass
 
 @en_5_cierra_la_noriega.before_loop
 async def before():
@@ -57,7 +64,7 @@ async def before():
     await asyncio.sleep(segundos_restantes)
 
 async def conectar_al_servidor():
-    global canal_noriega, canal_general
+    global servidor_conectado, canal_noriega, canal_general
     for guild in client.guilds:
         #print(f'{guild.name}(id: {guild.id})')
         #for c in guild.channels:
