@@ -2,7 +2,7 @@ import os
 import discord
 from discord.ext import tasks
 from dotenv import load_dotenv
-from acciones import conectar, acciones_programadas
+from acciones import conectar, acciones_programadas, recibir_mensaje
 from datetime import datetime
 
 def main():
@@ -14,6 +14,12 @@ def main():
         await acciones_programadas()
 
     client = discord.Client()
+
+    @client.event
+    async def on_message(message): # Cuando alguien dice "q onda?", respondo lo mismo
+        if message.author == client.user:
+            return
+        await acciones.recibir_mensaje(message)
 
     @client.event
     async def on_ready():

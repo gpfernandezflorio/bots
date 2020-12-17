@@ -107,3 +107,7 @@ async def conectar(cliente):
     for guild in cliente.guilds:
         for c in guild.channels:
             canales[c.id] = [guild,c]
+
+async def recibir_mensaje(message):
+    if message.content == 'q onda?':
+        await message.channel.send(message.content)
