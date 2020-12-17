@@ -19,7 +19,7 @@ def main():
     async def on_message(message): # Cuando alguien dice "q onda?", respondo lo mismo
         if message.author == client.user:
             return
-        await acciones.recibir_mensaje(message)
+        await recibir_mensaje(message)
 
     @client.event
     async def on_ready():
