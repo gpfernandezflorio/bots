@@ -1,6 +1,23 @@
+import json
+import os
 import testing
 
-eventos = [
+eventos = []
+ARCHIVO_EVENTOS = "eventos.json"
+
+async def inicializar_eventos():
+    global eventos, eventos_hc
+    if os.path.isfile(ARCHIVO_EVENTOS):
+        f = open(ARCHIVO_EVENTOS, 'r');
+        eventos = json.loads(f.read())
+    else:
+        eventos = eventos_hc
+        f = open(ARCHIVO_EVENTOS, 'w')
+        f.write(json.dumps(eventos))
+    f.close()
+
+
+eventos_hc = [
     {   "nombre":"ABRIR LA NORIEGA",
         "cuando":{"dia":"lu-vi", "hora":"9:00"},
         "accion":

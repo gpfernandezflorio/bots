@@ -1,5 +1,6 @@
-from eventos import eventos
+from eventos import eventos, inicializar_eventos
 from calendario import corresponde
+from comandos import recibir_comando
 
 canales = {}
 
@@ -22,7 +23,10 @@ async def conectar(cliente):
     for guild in cliente.guilds:
         for c in guild.channels:
             canales[c.id] = [guild,c]
+    await inicializar_eventos()
 
 async def recibir_mensaje(message):
-    if message.content == 'q onda?':
-        await message.channel.send(message.content)
+    if 'q onda?' in message.content:
+        await message.channel.send('q onda?')
+    else:
+        await recibir_comando(message)
