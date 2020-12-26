@@ -12,40 +12,72 @@ dias = ["lu","ma","mi","ju","vi","sa","do"]
 def formato(s, r):
     return r.match(s)
 
-def corresponde_dia(dia, actual):
+def calcular_hora(hora):
+    if formato(hora, re_hora):
+        dp = hora.find(":")
+        minutos = hora[dp+1:]
+        hora = hora[:dp]
+        return dt.time(hour=int(hora), minute=int(minutos))
+    return None
+
+def calcular_fecha(dia, desde, hora):
     if dia == "siempre":
-        return True
+        return desde.replace(hour=hora.hour, minute=hora.minute)
     if formato(dia, re_fecha_anio):
         d1 = dia.find("/")
         d2 = dia.find("/", d1+1)
         anio = dia[d2+1:]
         mes = dia[d1+1:d2]
         dia = dia[:d1]
-        return actual == dt.date(year=int(anio), month=int(mes), day=int(dia))
+        resultado = dt.datetime(year=int(anio), month=int(mes), day=int(dia), hour=hora.hour, minute=hora.minute)
+        if resultado < desde:
+            return None
+        return resultado
     if formato(dia, re_fecha):
-        return actual == actual.replace(day=int(dia[:dia.find("/")]), month=int(dia[dia.find("/")+1:]))
+        resultado = desde.replace(day=int(dia[:dia.find("/")]), month=int(dia[dia.find("/")+1:]), hour=hora.hour, minute=hora.minute)
+        if resultado < desde:
+            resultado = resultado.replace(year=resultado.year + 1)
+        return resultado
     if formato(dia, re_dias):
         d1 = dias.index(dia[:2])
         d2 = dias.index(dia[3:])
+        hoy = desde.weekday()
         if d2 > d1:
-            return actual.weekday() >= d1 and actual.weekday() <= d2
+            while(hoy < d1 or hoy > d2):
+                hoy = (hoy+1)%7
         else:
-            return actual.weekday() >= d1 or actual.weekday() <= d2
+            while(hoy < d1 and hoy > d2):
+                hoy = (hoy+1)%7
+        delta = (hoy - desde.weekday()) % 7
+        return desde.replace(hour=hora.hour, minute=hora.minute) + dt.timedelta(days=delta)
     if formato(dia, re_dia):
-        return actual.weekday() == dias.index(dia)
-    return False
+        delta = (dias.index(dia) - desde.weekday()) % 7
+        return desde.replace(hour=hora.hour, minute=hora.minute) + dt.timedelta(days=delta)
+    return None
 
-def corresponde_hora(hora, actual):
-    if formato(hora, re_hora):
-        dp = hora.find(":")
-        minutos = hora[dp+1:]
-        hora = hora[:dp]
-        return actual == dt.time(hour=int(hora), minute=int(minutos))
-    return False
+
+def crear_fecha(cuando, hoy):
+    hora = calcular_hora(cuando["hora"])
+    if (hora is None):
+        return None
+    # Me fijo si hoy ya pasó
+    if hora < hoy.time():
+        return calcular_fecha(cuando["dia"], hoy + dt.timedelta(days=1), hora)
+    return calcular_fecha(cuando["dia"], hoy, hora)
+
+def obtener_proximo_evento(lista_de_eventos):
+    hoy = dt.datetime.now().replace(second=0, microsecond=0)
+    proxima_fecha = None
+    for evento in lista_de_eventos:
+        if evento["habilitado"]:
+            fecha_evento = crear_fecha(evento["cuando"], hoy)
+            if (proxima_fecha is None):
+                proxima_fecha = [fecha_evento, evento]
+            elif fecha_evento < proxima_fecha[0]:
+                proxima_fecha = [fecha_evento, evento]
+    print("NEXT: " + str(proxima_fecha[0]) + " " + proxima_fecha[1]["nombre"])
+    return proxima_fecha
 
 def corresponde(cuando):
-    hoy = dt.datetime.now()
-    if corresponde_dia(cuando["dia"], hoy.date()):
-        if corresponde_hora(cuando["hora"], hoy.time().replace(second=0, microsecond=0)):
-            return True
-    return False
+    hoy = dt.datetime.now().replace(second=0, microsecond=0)
+    return cuando == hoy
