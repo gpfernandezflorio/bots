@@ -2,11 +2,10 @@ import json
 import os
 import testing
 
-eventos = []
 ARCHIVO_EVENTOS = "eventos.json"
 
 async def inicializar_eventos():
-    global eventos, eventos_hc
+    eventos = []
     if os.path.isfile(ARCHIVO_EVENTOS):
         f = open(ARCHIVO_EVENTOS, 'r');
         eventos = json.loads(f.read())
@@ -15,6 +14,7 @@ async def inicializar_eventos():
         f = open(ARCHIVO_EVENTOS, 'w')
         f.write(json.dumps(eventos))
     f.close()
+    return eventos
 
 
 eventos_hc = [
