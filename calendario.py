@@ -81,3 +81,30 @@ def obtener_proximo_evento(lista_de_eventos):
 def corresponde(cuando):
     hoy = dt.datetime.now().replace(second=0, microsecond=0)
     return cuando == hoy
+
+def formatear_fecha(txt, monospace=False):
+  dia_n = 0
+  mes_n = 0
+  dia_s = ''
+  mes_s = ''
+  if (monospace):
+    if txt[8] == "0":
+      txt = txt[:8] + " " + txt[9:]
+    if txt[5] == "0":
+      txt = txt[:5] + txt[6] + " " + txt[7:]
+    dia_s = txt[8:10]
+    mes_s = txt[5:7]
+    dia_n = int(dia_s)
+    mes_n = int(mes_s)
+  else:
+    dia_n = int(txt[8:10])
+    mes_n = int(txt[5:7])
+    dia_s = str(dia_n)
+    mes_s = str(mes_n)
+  hoy = dt.date.today()
+  if (hoy.day == dia_n and hoy.month == mes_n):
+    return "HOY"
+  fecha = dt.datetime.strptime(txt, '%Y-%m-%d').date()
+  if (fecha == hoy + dt.timedelta(days=1)):
+    return "Mañana"
+  return dia_s + "/" + mes_s

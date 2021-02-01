@@ -53,5 +53,14 @@ eventos_hc = [
             "canal": testing.id_canal_general,
             "valor": "Buen finde"
         }
+    },
+    {   "nombre":"RALONDARIO",
+        "cuando":{"dia":"siempre", "hora":"00:00"},
+        "habilitado":True,
+        "accion":
+        {   "tipo":"CH_MSG",
+            "canal": testing.id_canal_recordatorios,
+            "funcion": "proximos_eventos_ralondario"
+        }
     }
 ]

@@ -1,5 +1,6 @@
 from eventos import inicializar_eventos
 from calendario import corresponde, obtener_proximo_evento
+from ralondario import proximos_eventos_ralondario
 from comandos import recibir_comando
 
 canales = {}
@@ -12,7 +13,12 @@ async def realizar(accion):
         servidor = canal[0]
         canal = canal[1]
         if (accion["tipo"] == "CH_MSG"):
-            await canal.send(accion["valor"])
+            if ("value" in accion):
+              await canal.send(accion["valor"])
+            elif ("funcion" in accion):
+              toda_la_data = globals()
+              if accion["funcion"] in toda_la_data:
+                await canal.send(toda_la_data[accion["funcion"]]())
         elif (accion["tipo"] == "CH_PERM"):
             await canal.set_permissions(servidor.default_role, send_messages=accion["valor"])
 
@@ -40,6 +46,7 @@ def conectar_debug():
     global lista_de_eventos
     lista_de_eventos = inicializar_eventos()
     proximo_evento = obtener_proximo_evento(lista_de_eventos)
+    print(proximos_eventos_ralondario())
 
 async def recibir_mensaje(message):
     if 'q onda?' in message.content:
