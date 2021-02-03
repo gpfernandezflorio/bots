@@ -37,7 +37,7 @@ def formatear_evento_cuatrimestre(E, C):
 
 
 def formatear_hora(txt):
-  return txt
+  return txt[:5] + 'hs'
 
 def proximos_eventos_ralondario(dias=7, monospace=False):
   mensaje = "Pŕoximos eventos:"
@@ -45,11 +45,11 @@ def proximos_eventos_ralondario(dias=7, monospace=False):
   for evento in proximos_eventos(ID, 10, dias):
     nombre = formatear_nombre(evento['summary'], evento.get('description',''))
     inicio = evento['start']
-    fecha = formatear_fecha(inicio['date'], monospace)
+    fecha = formatear_fecha(inicio, monospace)
     hora = None
     texto = nombre
-    if 'time' in inicio:
-      hora = formatear_hora(inicio['time'])
+    if 'dateTime' in inicio:
+      hora = formatear_hora(inicio['dateTime'][11:])
       texto += " a las " + hora
     if 'location' in evento:
       lugar = evento['location']

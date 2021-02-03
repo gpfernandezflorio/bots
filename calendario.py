@@ -83,6 +83,12 @@ def corresponde(cuando):
     return cuando == hoy
 
 def formatear_fecha(txt, monospace=False):
+  if 'date' in txt:
+      txt = txt['date']
+  elif 'dateTime' in txt:
+      txt = txt['dateTime'][:10]
+  else:
+      return ''
   dia_n = 0
   mes_n = 0
   dia_s = ''
