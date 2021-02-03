@@ -55,7 +55,7 @@ eventos_hc = [
         }
     },
     {   "nombre":"RALONDARIO",
-        "cuando":{"dia":"siempre", "hora":"00:00"},
+        "cuando":{"dia":"siempre", "hora":"9:00"},
         "habilitado":True,
         "accion":
         {   "tipo":"CH_MSG",

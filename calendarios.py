@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from icalevents import icaldownload, icalparser
+#from icalevents import icaldownload, icalparser
 from datetime import datetime, timedelta
 from pytz import timezone
 from googleapi import obtener_proximos_eventos
