@@ -9,9 +9,9 @@ from google.auth.transport.requests import Request
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
-def cargar_calendario_google_api(ID, n):
+def cargar_calendario_google_api(ID, n, rango_dias):
     """Shows basic usage of the Google Calendar API.
-    Prints the start and name of the next 10 events on the user's calendar.
+    Prints the start and name of the next n events on the user's calendar.
     """
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
@@ -44,8 +44,23 @@ def cargar_calendario_google_api(ID, n):
     events_result = service.events().list(calendarId=ID, timeMin=now,
                                         maxResults=n, singleEvents=True,
                                         orderBy='startTime').execute()
-    events = events_result.get('items', [])
-    return (events, now) # span, calendar_raw
+    eventos = events_result.get('items', [])
+    ultimo = 0
+    hoy = datetime.date.today()
+    for evento in eventos:
+        inicio = evento['start']
+        if ('date' in inicio):
+            inicio = inicio['date']
+        elif ('dateTime' in inicio):
+            inicio = inicio['dateTime'][:10]
+        else:
+            inicio = '2100-01-01'
+        inicio = datetime.datetime.strptime(inicio, '%Y-%m-%d').date()
+        if (inicio-hoy).days <= rango_dias:
+            ultimo += 1
+        else:
+            break
+    return eventos[:ultimo]
 
 if __name__ == '__main__':
     eventos = cargar_calendario_google_api(None, 10)
