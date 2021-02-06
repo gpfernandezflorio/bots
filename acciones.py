@@ -1,11 +1,11 @@
 from eventos import inicializar_eventos
-from calendario import corresponde, obtener_proximo_evento
+from calendario import corresponde, obtener_eventos_siguientes
 from ralondario import proximos_eventos_ralondario
 from comandos import recibir_comando
 
 canales = {}
 lista_de_eventos = []
-proximo_evento = None
+eventos_siguientes = []
 
 async def realizar(accion):
     canal = canales[accion["canal"]]
@@ -23,16 +23,18 @@ async def realizar(accion):
             await canal.set_permissions(servidor.default_role, send_messages=accion["valor"])
 
 async def acciones_programadas():
-    global proximo_evento
-    if (proximo_evento is None):
-        proximo_evento = obtener_proximo_evento(lista_de_eventos)
-        if (proximo_evento is None):
+    global eventos_siguientes
+    if len(eventos_siguientes) == 0:
+        eventos_siguientes = obtener_eventos_siguientes(lista_de_eventos)
+        if len(eventos_siguientes) == 0:
             return
-    if corresponde(proximo_evento[0]):
-        print("NOW!")
-        await realizar(proximo_evento[1]["accion"])
-        proximo_evento = None
-        # TODO: Si era un evento de una única vez, eliminarlo
+    if corresponde(eventos_siguientes[0]):
+        print("NOW:")
+        for evento in eventos_siguientes[1:]:
+            print(" * " + evento["nombre"])
+            await realizar(evento["accion"])
+            # TODO: Si era un evento de una única vez, eliminarlo
+        eventos_siguientes = []
 
 async def conectar(cliente):
     global lista_de_eventos
@@ -45,7 +47,7 @@ async def conectar(cliente):
 def conectar_debug():
     global lista_de_eventos
     lista_de_eventos = inicializar_eventos()
-    proximo_evento = obtener_proximo_evento(lista_de_eventos)
+    eventos_siguientes = obtener_eventos_siguientes(lista_de_eventos)
     print(proximos_eventos_ralondario())
 
 async def recibir_mensaje(message):

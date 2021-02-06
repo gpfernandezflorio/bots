@@ -65,18 +65,25 @@ def crear_fecha(cuando, hoy):
         return calcular_fecha(cuando["dia"], hoy + dt.timedelta(days=1), hora)
     return calcular_fecha(cuando["dia"], hoy, hora)
 
-def obtener_proximo_evento(lista_de_eventos):
+def obtener_eventos_siguientes(lista_de_eventos):
     hoy = dt.datetime.now().replace(second=0, microsecond=0)
     proxima_fecha = None
+    eventos = []
     for evento in lista_de_eventos:
         if evento["habilitado"]:
             fecha_evento = crear_fecha(evento["cuando"], hoy)
             if (proxima_fecha is None):
-                proxima_fecha = [fecha_evento, evento]
-            elif fecha_evento < proxima_fecha[0]:
-                proxima_fecha = [fecha_evento, evento]
-    print("NEXT: " + str(proxima_fecha[0]) + " " + proxima_fecha[1]["nombre"])
-    return proxima_fecha
+                proxima_fecha = fecha_evento
+                eventos = [evento]
+            elif fecha_evento < proxima_fecha:
+                proxima_fecha = fecha_evento
+                eventos = [evento]
+            elif fecha_evento == proxima_fecha:
+                eventos.append(evento)
+    print("NEXT: " + str(proxima_fecha))
+    for evento in eventos:
+        print(" * " + evento["nombre"])
+    return [proxima_fecha] + eventos
 
 def corresponde(cuando):
     hoy = dt.datetime.now().replace(second=0, microsecond=0)

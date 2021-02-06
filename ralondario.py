@@ -34,8 +34,6 @@ def formatear_evento_cuatrimestre(E, C):
         return E + ' a' + C
     return C + " - " + E
 
-
-
 def formatear_hora(txt):
   return txt[:5] + 'hs'
 
