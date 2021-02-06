@@ -8,6 +8,7 @@ re_dia = re.compile('\w{2}')                            # di
 re_hora = re.compile('\d{1,2}:\d{1,2}')                 # hh:mm
 
 dias = ["lu","ma","mi","ju","vi","sa","do"]
+nombre_dias = ["lunes","martes","miércoles","jueves","viernes","sábado","domingo"]
 
 def formato(s, r):
     return r.match(s)
@@ -120,4 +121,4 @@ def formatear_fecha(txt, monospace=False):
   fecha = dt.datetime.strptime(txt, '%Y-%m-%d').date()
   if (fecha == hoy + dt.timedelta(days=1)):
     return "Mañana"
-  return dia_s + "/" + mes_s
+  return "El " + nombre_dias[fecha.weekday()] + " " + dia_s + "/" + mes_s
