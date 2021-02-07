@@ -1,4 +1,5 @@
 import testing
+from eventos import listar_eventos, data_evento
 
 def es_para_mi(msg):
     if type(msg) == type(""):
@@ -17,19 +18,25 @@ def es_para_mi(msg):
     return None
 
 def recibir_comando(msg):
+  info_comando = {"OK":False}
   comando = es_para_mi(msg)
   if comando is None:
-      return
+      return info_comando
   delimitador = comando.find(' ')
-  argumentos = None
+  argumentos = []
   if delimitador > 0:
       argumentos = comando[delimitador+1:]
       while len(argumentos) > 0 and argumentos[0] == ' ':
           argumentos = argumentos[1:]
       if len(argumentos) == 0:
-        argumentos = None
+        argumentos = []
+      else:
+        argumentos = argumentos.split(' ');
       comando = comando[:delimitador]
-  return comando.lower(), argumentos
+  info_comando["comando"] = comando
+  info_comando["argumentos"] = argumentos
+  info_comando["OK"] = True
+  return info_comando
 
 async def ejecutar_comando(comando, argumentos, msg):
     if (comando in comandos_validos):
@@ -45,9 +52,32 @@ async def c_flan(args, msg):
 def c_flan_debug(args, msg):
     print('https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png')
 
+def recordatorios(args, msg):
+    txt = "Lista de recordatorios:"
+    if len(args) == 0:
+        for evento in listar_eventos():
+            txt += "\n " + evento["nombre"]
+    else:
+        nombre = args[0]
+        for evento in listar_eventos():
+            if evento["nombre"] == nombre:
+                return data_evento(evento)
+        txt = "Recordatorio inexistente: " + nombre
+    return txt
+
+async def c_recordatorios(args, msg):
+    await msg.channel.send(recordatorios(args, msg))
+
+def c_recordatorios_debug(args, msg):
+    print(recordatorios(args, msg))
+
 comandos_validos = {
     "flan":{
         "f":c_flan,
         "f_debug":c_flan_debug
+    },
+    "recordatorios":{
+        "f":c_recordatorios,
+        "f_debug":c_recordatorios_debug
     }
 }

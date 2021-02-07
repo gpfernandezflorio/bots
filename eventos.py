@@ -2,22 +2,60 @@ import json
 import os
 import testing
 
+from canales import nombreCanal
+from calendario import data_fecha
+
 ARCHIVO_EVENTOS = "eventos.json"
+lista_de_eventos = []
 
 def inicializar_eventos():
-    eventos = []
+    global lista_de_eventos
+    lista_de_eventos = []
     if os.path.isfile(ARCHIVO_EVENTOS):
         f = open(ARCHIVO_EVENTOS, 'r');
-        eventos = json.loads(f.read()) + eventos_hc
+        lista_de_eventos = json.loads(f.read()) + eventos_hc
     else:
         f = open(ARCHIVO_EVENTOS, 'w')
         f.write(json.dumps([]))
-        eventos = eventos_hc
+        lista_de_eventos = eventos_hc
     f.close()
-    return eventos
+
+def listar_eventos():
+    return lista_de_eventos
+
+def data_evento(evento):
+    txt = evento["nombre"]
+    txt += "\n Estado: " + ("Habilitado" if evento.get("habilitado", False) else "Deshabilitado")
+    txt += "\n Acción: " + data_accion(evento.get("accion", {"tipo":"NADA"}))
+    txt += "\n Cuando: " + data_fecha(evento.get("cuando", {"dia":"-"}))
+    return txt
+
+def data_accion(accion):
+    tipo = accion.get("tipo", "NADA")
+    if tipo == "CH_PERM":
+        canal = accion.get("canal")
+        if canal is None:
+            canal = "de un canal"
+        else:
+            canal = "del canal " + nombreCanal(canal)
+        valor = accion.get("valor", False)
+        return ("Habilitar" if valor else "Deshabilitar") + " permisos " + canal
+    if tipo == "CH_MSG":
+        msg = accion.get("valor")
+        if msg is None:
+            msg = "un mensaje"
+        else:
+            msg = "el mensaje \"" + msg + "\""
+        canal = accion.get("canal")
+        if canal is None:
+            canal = ""
+        else:
+            canal = "al canal " + nombreCanal(canal)
+        return "Mandar " + msg + canal
+    return "Nada"
 
 eventos_hc = [
-    {   "nombre":"ABRIR LA NORIEGA",
+    {   "nombre":"ABRIR_LA_NORIEGA",
         "cuando":{"dia":"lu-vi", "hora":"9:00"},
         "habilitado":True,
         "accion":
@@ -26,7 +64,7 @@ eventos_hc = [
             "valor": True,
         }
     },
-    {   "nombre":"CERRAR LA NORIEGA",
+    {   "nombre":"CERRAR_LA_NORIEGA",
         "cuando":{"dia":"lu-vi", "hora":"18:00"},
         "habilitado":True,
         "accion":
@@ -35,7 +73,7 @@ eventos_hc = [
             "valor": False
         }
     },
-    {   "nombre":"AVISO NORIEGA",
+    {   "nombre":"AVISO_NORIEGA",
         "cuando":{"dia":"lu-vi", "hora":"17:55"},
         "habilitado":False,
         "accion":
@@ -44,7 +82,7 @@ eventos_hc = [
             "valor": "Atención: En 5 mimitos se cierra la Noriega"
         }
     },
-    {   "nombre":"BUEN FINDE",
+    {   "nombre":"BUEN_FINDE",
         "cuando":{"dia":"vi", "hora":"21:00"},
         "habilitado":True,
         "accion":

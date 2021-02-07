@@ -9,6 +9,32 @@ re_hora = re.compile('\d{1,2}:\d{1,2}')                 # hh:mm
 
 dias = ["lu","ma","mi","ju","vi","sa","do"]
 nombre_dias = ["lunes","martes","miércoles","jueves","viernes","sábado","domingo"]
+nombres_meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"]
+
+def data_fecha(fecha):
+    dia = fecha.get("dia", "-")
+    hora = fecha.get("hora")
+    if hora is None:
+        hora = ""
+    else:
+        hora = " a las " + hora
+    if (dia == "siempre"):
+        dia = "Todos los días"
+    elif formato(dia, re_fecha_anio):
+        dia = dia.split("/")
+        dia = "El " + dia[0] + " de " + nombres_meses[int(dia[1])-1] + " de " + dia[2]
+    elif formato(dia, re_fecha):
+        dia = dia.split("/")
+        dia = "Todos los " + dia[0] + " de " + nombres_meses[int(dia[1])-1]
+    elif formato(dia, re_dias):
+        dia = "De " + nombre_dias[dias.index(dia[:2])] + " a " + nombre_dias[dias.index(dia[3:])]
+    elif formato(dia, re_dia):
+        dia = "Los " + nombre_dias[dias.index(dia)]
+        if not dias.endswith("s"):
+            dia += "s"
+    else:
+        dia = "Nunca"
+    return dia + hora
 
 def formato(s, r):
     return r.match(s)
