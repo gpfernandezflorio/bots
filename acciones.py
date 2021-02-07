@@ -1,7 +1,7 @@
 from eventos import inicializar_eventos
 from calendario import corresponde, obtener_eventos_siguientes
 from ralondario import proximos_eventos_ralondario
-from comandos import recibir_comando
+from comandos import recibir_comando, ejecutar_comando, ejecutar_comando_debug
 
 canales = {}
 lista_de_eventos = []
@@ -49,9 +49,19 @@ def conectar_debug():
     lista_de_eventos = inicializar_eventos()
     eventos_siguientes = obtener_eventos_siguientes(lista_de_eventos)
     print(proximos_eventos_ralondario())
+    debug_chat()
+
+def debug_chat():
+    while(True):
+        msg = input("SEND: ")
+        if len(msg)==0:
+            break
+        comando, argumentos = recibir_comando(msg)
+        ejecutar_comando_debug(comando, argumentos, msg)
 
 async def recibir_mensaje(message):
     if 'q onda?' in message.content:
         await message.channel.send('q onda?')
     else:
-        await recibir_comando(message)
+        comando, argumentos = recibir_comando(message)
+        await ejecutar_comando(comando, argumentos, message)

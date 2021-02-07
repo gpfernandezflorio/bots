@@ -8,12 +8,11 @@ def inicializar_eventos():
     eventos = []
     if os.path.isfile(ARCHIVO_EVENTOS):
         f = open(ARCHIVO_EVENTOS, 'r');
-        eventos = json.loads(f.read())
-        pass
+        eventos = json.loads(f.read()) + eventos_hc
     else:
-        eventos = eventos_hc
         f = open(ARCHIVO_EVENTOS, 'w')
-        f.write(json.dumps(eventos))
+        f.write(json.dumps([]))
+        eventos = eventos_hc
     f.close()
     return eventos
 
