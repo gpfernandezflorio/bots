@@ -50,7 +50,7 @@ def data_accion(accion):
         if canal is None:
             canal = ""
         else:
-            canal = "al canal " + nombreCanal(canal)
+            canal = " al canal " + nombreCanal(canal)
         return "Mandar " + msg + canal
     return "Nada"
 

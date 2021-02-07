@@ -53,7 +53,7 @@ def c_flan_debug(args, msg):
     print('https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png')
 
 def recordatorios(args, msg):
-    txt = "Lista de recordatorios:"
+    txt = "Lista de tareas:"
     if len(args) == 0:
         for evento in listar_eventos():
             txt += "\n " + evento["nombre"]
@@ -62,7 +62,7 @@ def recordatorios(args, msg):
         for evento in listar_eventos():
             if evento["nombre"] == nombre:
                 return data_evento(evento)
-        txt = "Recordatorio inexistente: " + nombre
+        txt = "Tarea inexistente: " + nombre
     return txt
 
 async def c_recordatorios(args, msg):
@@ -108,14 +108,14 @@ comandos_validos = {
             "Responde con la imagen del grafo con el plan de estudios. No toma argumentos."
         ]
     },
-    "recordatorios":{
+    "tasks":{
         "f":c_recordatorios,
         "f_debug":c_recordatorios_debug,
         "ayuda":[
-            "Listar recordatorios",
-            "Responde con la lista de recordatorios agendados. " +
-            "Si se le pasa como argumento el nombre de un recordatorio en lugar de listarlos todos devuelve los detalles de dicho recordatorio. " +
-            "Ejemplos: \"recordatorios\" para la lista de recordatorios ; \"recordatorios ABRIR_LA_NORIEGA\" para los detalles del recordatorio que abre la Noriega."
+            "Listar tareas periódicas",
+            "Responde con la lista de tareas agendadas. " +
+            "Si se le pasa como argumento el nombre de una tarea en lugar de listarlas todas devuelve los detalles de dicha tarea. " +
+            "Ejemplos: \"tasks\" para la lista de tareas ; \"task ABRIR_LA_NORIEGA\" para los detalles de la tarea que abre la Noriega."
         ]
     }
 }
