@@ -60,7 +60,11 @@ def debug_chat():
 async def recibir_mensaje(message):
     if 'q onda?' in message.content:
         await message.channel.send('q onda?')
-    else:
-        info_comando = recibir_comando(message)
-        if info_comando["OK"]:
-            await ejecutar_comando(info_comando["comando"], info_comando["argumentos"], message)
+        return
+    for patron in ['felicitaciones','felicidades','felicito','feliz','congrats','congratulation']:
+        if patron in message.content.lower():
+            await message.channel.send('Felicitaciones Charly!')
+            return
+    info_comando = recibir_comando(message)
+    if info_comando["OK"]:
+        await ejecutar_comando(info_comando["comando"], info_comando["argumentos"], message)

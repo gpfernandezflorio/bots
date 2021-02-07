@@ -30,7 +30,7 @@ def data_fecha(fecha):
         dia = "De " + nombre_dias[dias.index(dia[:2])] + " a " + nombre_dias[dias.index(dia[3:])]
     elif formato(dia, re_dia):
         dia = "Los " + nombre_dias[dias.index(dia)]
-        if not dias.endswith("s"):
+        if not dia.endswith("s"):
             dia += "s"
     else:
         dia = "Nunca"
