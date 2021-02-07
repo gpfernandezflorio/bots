@@ -71,13 +71,51 @@ async def c_recordatorios(args, msg):
 def c_recordatorios_debug(args, msg):
     print(recordatorios(args, msg))
 
+def man(args, msg):
+    txt = "Lista de comandos:"
+    if len(args) == 0:
+        for comando in comandos_validos.keys():
+            txt += "\n " + comando + " - " + comandos_validos[comando]["ayuda"][0]
+    else:
+        nombre = args[0]
+        if nombre in comandos_validos:
+            return "[[" + nombre + "]]\n" + comandos_validos[nombre]["ayuda"][1]
+        txt = "Comando inexistente: " + nombre
+    return txt
+
+async def c_man(args, msg):
+    await msg.channel.send(man(args, msg))
+
+def c_man_debug(args, msg):
+    print(man(args, msg))
+
 comandos_validos = {
+    "man":{
+        "f":c_man,
+        "f_debug":c_man_debug,
+        "ayuda":[
+            "Ver lista de comandos",
+            "Responde con la lista de comandos y una breve descripción de cada uno. " +
+            "Si se le pasa como argumento el nombre de un comando en lugar de listarlos todos devuelve los detalles de dicho comando. " +
+            "Ejemplos: \"man\" para la lista de comandos ; \"man man\" para los detalles del comando man."
+        ]
+    },
     "flan":{
         "f":c_flan,
-        "f_debug":c_flan_debug
+        "f_debug":c_flan_debug,
+        "ayuda":[
+            "Ver el plan de estudios",
+            "Responde con la imagen del grafo con el plan de estudios. No toma argumentos."
+        ]
     },
     "recordatorios":{
         "f":c_recordatorios,
-        "f_debug":c_recordatorios_debug
+        "f_debug":c_recordatorios_debug,
+        "ayuda":[
+            "Listar recordatorios",
+            "Responde con la lista de recordatorios agendados. " +
+            "Si se le pasa como argumento el nombre de un recordatorio en lugar de listarlos todos devuelve los detalles de dicho recordatorio. " +
+            "Ejemplos: \"recordatorios\" para la lista de recordatorios ; \"recordatorios ABRIR_LA_NORIEGA\" para los detalles del recordatorio que abre la Noriega."
+        ]
     }
 }
