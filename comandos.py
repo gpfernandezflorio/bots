@@ -1,5 +1,7 @@
 import testing
 from eventos import listar_eventos, data_evento
+from ralondario import proximos_eventos_ralondario
+import datetime as dt
 
 def es_para_mi(msg):
     if type(msg) == type(""):
@@ -89,6 +91,36 @@ async def c_man(args, msg):
 def c_man_debug(args, msg):
     print(man(args, msg))
 
+async def c_ralondario(args, msg):
+    await msg.channel.send(ralondario(args, msg))
+
+def c_ralondario_debug(args, msg):
+    print(ralondario(args, msg))
+
+def ralondario(args, msg):
+    info = {}
+    if len(args) > 0:
+        arg = args[0]
+        try:
+            n = int(arg)
+            info["cantidad"] = n
+            info["recortar_en"] = "cantidad"
+        except:
+            fecha = arg.split("/")
+            if len(fecha) == 2:
+                try:
+                    dia = int(fecha[0])
+                    mes = int(fecha[1])
+                    hoy = dt.date.today()
+                    fecha = dt.date(hoy.year, mes, dia)
+                    if fecha < hoy:
+                        fecha = fecha.replace(year = fecha.year + 1)
+                    info["dias"] = (fecha - hoy).days
+                    info["recortar_en"] = "dias"
+                except:
+                    pass
+    return proximos_eventos_ralondario(info)
+
 comandos_validos = {
     "man":{
         "f":c_man,
@@ -116,6 +148,18 @@ comandos_validos = {
             "Responde con la lista de tareas agendadas. " +
             "Si se le pasa como argumento el nombre de una tarea en lugar de listarlas todas devuelve los detalles de dicha tarea. " +
             "Ejemplos: \"tasks\" para la lista de tareas ; \"task ABRIR_LA_NORIEGA\" para los detalles de la tarea que abre la Noriega."
+        ]
+    },
+    "cal":{
+        "f":c_ralondario,
+        "f_debug":c_ralondario_debug,
+        "ayuda":[
+            "Mostrar calendario académico",
+            "Responde con una lista de próximos eventos en el calendario académico. " +
+            "Si se le pasa como argumento un número devuelve esa cantidad de eventos. " +
+            "Si se le pasa como argumento una fecha (dos números separados por una diagonal) devuelve todos los eventos hasta esa fecha inclusive. " +
+            "Si no se le pasa ningún argumento muestra hasta 10 eventos dentro de los próximos 7 días. " +
+            "Ejemplos: \"cal\" para ver hasta 10 eventos de la próxima semana ; \"cal 5\" para ver los próximos 5 eventos ; \"cal 10/5\" para ver los eventos hasta el 10 de mayo."
         ]
     }
 }

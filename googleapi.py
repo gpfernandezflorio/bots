@@ -9,7 +9,7 @@ from google.auth.transport.requests import Request
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
-def cargar_calendario_google_api(ID, n, rango_dias):
+def cargar_calendario_google_api(ID, n, rango_dias, corte):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next n events on the user's calendar.
     """
@@ -45,22 +45,49 @@ def cargar_calendario_google_api(ID, n, rango_dias):
                                         maxResults=n, singleEvents=True,
                                         orderBy='startTime').execute()
     eventos = events_result.get('items', [])
-    ultimo = 0
-    hoy = datetime.date.today()
-    for evento in eventos:
-        inicio = evento['start']
-        if ('date' in inicio):
-            inicio = inicio['date']
-        elif ('dateTime' in inicio):
-            inicio = inicio['dateTime'][:10]
+    if corte == "ambos" or corte == "dias":
+        hoy = datetime.date.today()
+        ultimo = obtener_ultimo_valido(eventos, hoy, rango_dias)
+        if ultimo == len(eventos):
+            if corte == "dias":
+                eventos += pedir_mas_eventos(service, eventos[-1], ID, n, rango_dias, hoy)
         else:
-            inicio = '2100-01-01'
-        inicio = datetime.datetime.strptime(inicio, '%Y-%m-%d').date()
+            eventos = eventos[:ultimo]
+    return eventos
+
+def obtener_ultimo_valido(eventos, hoy, rango_dias):
+    ultimo = 0
+    for evento in eventos:
+        inicio = fecha_evento(evento)
         if (inicio-hoy).days <= rango_dias:
             ultimo += 1
         else:
+            return ultimo
+    return ultimo
+
+def fecha_evento(evento):
+    inicio = evento['start']
+    if ('date' in inicio):
+        inicio = inicio['date']
+    elif ('dateTime' in inicio):
+        inicio = inicio['dateTime'][:10]
+    else:
+        inicio = '2100-01-01'
+    return datetime.datetime.strptime(inicio, '%Y-%m-%d').date()
+
+def pedir_mas_eventos(service, ultimo, ID, n, rango_dias, hoy):
+    mas_eventos = []
+    inicio = fecha_evento(ultimo)
+    while((inicio-hoy).days <= rango_dias):
+        mas = service.events().list(calendarId=ID, timeMin=datetime.datetime.fromordinal(inicio.toordinal()).isoformat() + 'Z',
+                                        maxResults=n, singleEvents=True,
+                                        orderBy='startTime').execute()
+        mas = mas.get('items', [])
+        mas_eventos += mas
+        if len(mas) < n:
             break
-    return eventos[:ultimo]
+        inicio = fecha_evento(mas_eventos[-1])
+    return mas_eventos[:obtener_ultimo_valido(mas_eventos, hoy, rango_dias)]
 
 if __name__ == '__main__':
     eventos = cargar_calendario_google_api(None, 10)

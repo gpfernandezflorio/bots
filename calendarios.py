@@ -16,7 +16,8 @@ def __calendar_url(i):
         '%40group.calendar.google.com/public/basic.ics'
 
 # Cargo la data del calendario
-def cargar_calendario_icalevents(i, cantidad, rango_dias, retries):
+def cargar_calendario_icalevents(i, cantidad, rango_dias, corte, retries):
+    # TODO: Considerar el argumento "corte"
     url = __calendar_url(i)
     now = aware_now()
     span = timedelta(days=rango_dias)
@@ -39,9 +40,9 @@ def es_posterior(f1, f2):
   return f1.date() >= f2.date()
 
 # Devuelve los n próximos eventos del calendario con un limite de l dias
-def proximos_eventos(i, n, l):
+def proximos_eventos(i, n, l, corte):
     # la comento porque icalevents tiene un bug al comparar fechas
-    # return cargar_calendario_icalevents(i, n, l, 3)
+    # return cargar_calendario_icalevents(i, n, l, corte, 3)
 
     # en su lugar, uso la api de Google
-    return cargar_calendario_google_api(i, n, l)
+    return cargar_calendario_google_api(i, n, l, corte)

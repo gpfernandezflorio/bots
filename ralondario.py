@@ -15,7 +15,7 @@ def formatear_nombre(txt, descripcion):
           return P[1] + ' a finales'
   elif P[0] == "FINALES":
       txt = "Exámenes finales"
-      if len(P) > 0:
+      if len(P) > 1:
           txt += " (" + P[1].lower() + ")"
   elif P[0] in ['Verano','1C','2C'] and len(P) == 2:
       return formatear_evento_cuatrimestre(P[1], P[0])
@@ -37,10 +37,14 @@ def formatear_evento_cuatrimestre(E, C):
 def formatear_hora(txt):
   return txt[:5] + 'hs'
 
-def proximos_eventos_ralondario(dias=7, monospace=False):
+def proximos_eventos_ralondario(info={}):
+  dias = info.get("dias", 7)
+  cantidad = info.get("cantidad", 10)
+  monospace = info.get("monospace", False)
+  recortar_en = info.get("recortar_en", "ambos") # puede ser "dias", "cantidad" o "ambos"
   mensaje = "Pŕoximos eventos:"
   eventos = []
-  for evento in proximos_eventos(ID, 10, dias):
+  for evento in proximos_eventos(ID, cantidad, dias, recortar_en):
     nombre = formatear_nombre(evento['summary'], evento.get('description',''))
     inicio = evento['start']
     fecha = formatear_fecha(inicio, monospace)
@@ -70,7 +74,7 @@ def proximos_eventos_ralondario(dias=7, monospace=False):
   return mensaje
 
 def proxima_tesis():
-  for evento in proximos_eventos(ID, 50, 1):
+  for evento in proximos_eventos(ID, 50, 1, "dias"):
     if evento['summary'].startswith("Defensa de Tesis"):
       hora = ""
       inicio = str(evento['start'])
