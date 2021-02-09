@@ -27,8 +27,9 @@ def recibir_mensajes():
     f = open("last_update.txt", 'w')
     f.write(str(actualizaciones[-1].update_id) + '\n')
     f.close()
-  actualizaciones_con_mensajes = filter(lambda x: not x.message is None, actualizaciones)
+  actualizaciones_con_mensajes = filter(lambda x: not (x.message is None) and not (x.message.text is None), actualizaciones)
   mensajes = map(lambda x:
+    # Devuelvo lo mensajes con la siguiente representación
     {"texto":x.message.text, "chat_id":x.message.chat.id, "msg_id":x.message.message_id},
     actualizaciones_con_mensajes)
   return mensajes

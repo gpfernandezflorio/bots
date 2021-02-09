@@ -17,7 +17,7 @@ def main():
     async def una_vez_por_minuto():
         # Recibir mensajes de TG:
         for mensaje in tg.recibir_mensajes():
-            recibir_mensaje_telegram(mensaje["texto"], mensaje["chat_id"], mensaje["msg_id"])
+            recibir_mensaje_telegram(mensaje)
         await acciones_programadas()
 
     if (DEBUG):

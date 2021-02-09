@@ -2,7 +2,7 @@ import discord
 from eventos import inicializar_eventos, listar_eventos
 from calendario import corresponde, obtener_eventos_siguientes
 from ralondario import proximos_eventos_ralondario, proxima_tesis
-from comandos import recibir_comando, ejecutar_comando_discord, ejecutar_comando_debug, procesar_mensaje
+from comandos import recibir_comando, ejecutar_comando_discord, ejecutar_comando_debug, ejecutar_comando_telegram, procesar_mensaje
 from canales import agregar_canal, obtener_canal, inicializar_canales
 import tg
 import imageDraw
@@ -95,15 +95,14 @@ def debug_chat():
         if info_comando["OK"]:
             ejecutar_comando_debug(info_comando["comando"], info_comando["argumentos"], msg)
 
-def recibir_mensaje_telegram(texto, chat_id, msg_id):
-  print("Recibido: " + texto)
-  respuesta = procesar_mensaje(texto)
+def recibir_mensaje_telegram(mensaje):
+  respuesta = procesar_mensaje(mensaje["texto"])
   if respuesta is None:
-      info_comando = recibir_comando(texto)
+      info_comando = recibir_comando(mensaje["texto"])
       if info_comando["OK"]:
           ejecutar_comando_telegram(info_comando["comando"], info_comando["argumentos"], mensaje)
   else:
-      tg.mandar_texto(chat_id, respuesta, msg_id)
+      tg.mandar_texto(mensaje["chat_id"], respuesta, mensaje["msg_id"])
 
 async def recibir_mensaje_discord(message):
     respuesta = procesar_mensaje(message.content)

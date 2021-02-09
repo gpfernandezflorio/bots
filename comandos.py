@@ -45,6 +45,7 @@ def procesar_mensaje(txt):
     for patron in ['felicitaciones','felicidades','felicito','feliz','congrats','congratulation']:
         if patron in txt.lower():
             return 'Felicitaciones Charly!'
+    return None
 
 async def ejecutar_comando_discord(comando, argumentos, msg):
     if (comando in comandos_validos):
@@ -62,7 +63,7 @@ async def c_flan_discord(args, msg):
     await msg.channel.send('https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png')
 
 def c_flan_telegram(args, msg):
-    tg.mandar_texto(msg.chat.id, 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png', msg.message_id)
+    tg.mandar_texto(msg["chat_id"], 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png', msg["msg_id"])
 
 def c_flan_debug(args, msg):
     print('https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png')
@@ -84,7 +85,7 @@ async def c_recordatorios_discord(args, msg):
     await msg.channel.send(recordatorios(args))
 
 def c_recordatorios_telegram(args, msg):
-    tg.mandar_texto(msg.chat.id, recordatorios(args), msg.message_id)
+    tg.mandar_texto(msg["chat_id"], recordatorios(args), msg["msg_id"])
 
 def c_recordatorios_debug(args, msg):
     print(recordatorios(args))
@@ -105,7 +106,7 @@ async def c_man_discord(args, msg):
     await msg.channel.send(man(args))
 
 def c_man_telegram(args, msg):
-    tg.mandar_texto(msg.chat.id, man(args), msg.message_id)
+    tg.mandar_texto(msg["chat_id"], man(args), msg["msg_id"])
 
 def c_man_debug(args, msg):
     print(man(args))
@@ -114,7 +115,7 @@ async def c_ralondario_discord(args, msg):
     await msg.channel.send(ralondario(args))
 
 def c_ralondario_telegram(args, msg):
-    tg.mandar_texto(msg.chat.id, ralondario(args), msg.message_id)
+    tg.mandar_texto(msg["chat_id"], ralondario(args), msg["msg_id"])
 
 def c_ralondario_debug(args, msg):
     print(ralondario(args))
