@@ -2,15 +2,14 @@ import testing
 from eventos import listar_eventos, data_evento
 from ralondario import proximos_eventos_ralondario
 import datetime as dt
+import tg
 
 def es_para_mi(msg):
-    if type(msg) == type(""):
-        return msg
     comando = None
-    if msg.content.startswith("<@!"+str(testing.id_me)+">") or msg.content.startswith("<@&"+str(testing.id_rol)+">"):
-        comando = msg.content[msg.content.find('>')+1:]
-    elif msg.content[:4].lower() == "tina":
-        comando = msg.content[4:]
+    if msg.startswith("<@!"+str(testing.id_me)+">") or msg.startswith("<@&"+str(testing.id_rol)+">"):
+        comando = msg[msg.find('>')+1:]
+    elif msg[:4].lower() == "tina":
+        comando = msg[4:]
     if not (comando is None):
         while len(comando) > 0 and comando[0] == ' ':
             comando = comando[1:]
@@ -40,21 +39,35 @@ def recibir_comando(msg):
   info_comando["OK"] = True
   return info_comando
 
-async def ejecutar_comando(comando, argumentos, msg):
+def procesar_mensaje(txt):
+    if 'q onda?' in txt:
+        return 'q onda?'
+    for patron in ['felicitaciones','felicidades','felicito','feliz','congrats','congratulation']:
+        if patron in txt.lower():
+            return 'Felicitaciones Charly!'
+
+async def ejecutar_comando_discord(comando, argumentos, msg):
     if (comando in comandos_validos):
-        await comandos_validos[comando]['f'](argumentos, msg)
+        await comandos_validos[comando]['f_discord'](argumentos, msg)
+
+def ejecutar_comando_telegram(comando, argumentos, msg):
+    if (comando in comandos_validos):
+        comandos_validos[comando]['f_telegram'](argumentos, msg)
 
 def ejecutar_comando_debug(comando, argumentos, msg):
     if (comando in comandos_validos):
         comandos_validos[comando]['f_debug'](argumentos, msg)
 
-async def c_flan(args, msg):
+async def c_flan_discord(args, msg):
     await msg.channel.send('https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png')
+
+def c_flan_telegram(args, msg):
+    tg.mandar_texto(msg.chat.id, 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png', msg.message_id)
 
 def c_flan_debug(args, msg):
     print('https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png')
 
-def recordatorios(args, msg):
+def recordatorios(args):
     txt = "Lista de tareas:"
     if len(args) == 0:
         for evento in listar_eventos():
@@ -67,13 +80,16 @@ def recordatorios(args, msg):
         txt = "Tarea inexistente: " + nombre
     return txt
 
-async def c_recordatorios(args, msg):
-    await msg.channel.send(recordatorios(args, msg))
+async def c_recordatorios_discord(args, msg):
+    await msg.channel.send(recordatorios(args))
+
+def c_recordatorios_telegram(args, msg):
+    tg.mandar_texto(msg.chat.id, recordatorios(args), msg.message_id)
 
 def c_recordatorios_debug(args, msg):
-    print(recordatorios(args, msg))
+    print(recordatorios(args))
 
-def man(args, msg):
+def man(args):
     txt = "Lista de comandos:"
     if len(args) == 0:
         for comando in comandos_validos.keys():
@@ -85,19 +101,25 @@ def man(args, msg):
         txt = "Comando inexistente: " + nombre
     return txt
 
-async def c_man(args, msg):
-    await msg.channel.send(man(args, msg))
+async def c_man_discord(args, msg):
+    await msg.channel.send(man(args))
+
+def c_man_telegram(args, msg):
+    tg.mandar_texto(msg.chat.id, man(args), msg.message_id)
 
 def c_man_debug(args, msg):
-    print(man(args, msg))
+    print(man(args))
 
-async def c_ralondario(args, msg):
-    await msg.channel.send(ralondario(args, msg))
+async def c_ralondario_discord(args, msg):
+    await msg.channel.send(ralondario(args))
+
+def c_ralondario_telegram(args, msg):
+    tg.mandar_texto(msg.chat.id, ralondario(args), msg.message_id)
 
 def c_ralondario_debug(args, msg):
-    print(ralondario(args, msg))
+    print(ralondario(args))
 
-def ralondario(args, msg):
+def ralondario(args):
     info = {}
     if len(args) > 0:
         arg = args[0]
@@ -123,7 +145,8 @@ def ralondario(args, msg):
 
 comandos_validos = {
     "man":{
-        "f":c_man,
+        "f_discord":c_man_discord,
+        "f_telegram":c_man_telegram,
         "f_debug":c_man_debug,
         "ayuda":[
             "Ver lista de comandos",
@@ -133,7 +156,8 @@ comandos_validos = {
         ]
     },
     "flan":{
-        "f":c_flan,
+        "f_discord":c_flan_discord,
+        "f_telegram":c_flan_telegram,
         "f_debug":c_flan_debug,
         "ayuda":[
             "Ver el plan de estudios",
@@ -141,7 +165,8 @@ comandos_validos = {
         ]
     },
     "tasks":{
-        "f":c_recordatorios,
+        "f_discord":c_recordatorios_discord,
+        "f_telegram":c_recordatorios_telegram,
         "f_debug":c_recordatorios_debug,
         "ayuda":[
             "Listar tareas periódicas",
@@ -151,7 +176,8 @@ comandos_validos = {
         ]
     },
     "cal":{
-        "f":c_ralondario,
+        "f_discord":c_ralondario_discord,
+        "f_telegram":c_ralondario_telegram,
         "f_debug":c_ralondario_debug,
         "ayuda":[
             "Mostrar calendario académico",

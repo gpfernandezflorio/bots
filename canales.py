@@ -8,7 +8,15 @@ def agregar_canal(guild, c):
     todos_los_canales[c.id] = [guild,c]
 
 def obtener_canal(i):
-    return todos_los_canales[i]
+    if i is None:
+        return None
+    if i in todos_los_canales:
+        return todos_los_canales[i]
+    return None
+
+def inicializar_canales():
+    global todos_los_canales
+    todos_los_canales = {}
 
 def nombreCanal(i):
     if i in todos_los_canales:

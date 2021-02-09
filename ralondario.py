@@ -74,6 +74,7 @@ def proximos_eventos_ralondario(info={}):
   return mensaje
 
 def proxima_tesis():
+  res = []
   for evento in proximos_eventos(ID, 50, 1, "dias"):
     if evento['summary'].startswith("Defensa de Tesis"):
       hora = ""

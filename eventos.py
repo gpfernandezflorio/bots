@@ -88,6 +88,7 @@ eventos_hc = [
         "accion":
         {   "tipo":"CH_MSG",
             "canal": testing.id_canal_general,
+            "grupo": testing.TG_GROUP,
             "valor": "Buen finde"
         }
     },
@@ -97,6 +98,7 @@ eventos_hc = [
         "accion":
         {   "tipo":"CH_MSG",
             "canal": testing.id_canal_recordatorios,
+            "grupo": testing.TG_GROUP,
             "funcion": "proximos_eventos_ralondario"
         }
     },
@@ -106,6 +108,7 @@ eventos_hc = [
         "accion":
         {   "tipo":"CH_FILE",
             "canal": testing.id_canal_recordatorios,
+            "grupo": testing.TG_GROUP,
             "funcion": "anuncio_proxima_tesis"
         }
     }

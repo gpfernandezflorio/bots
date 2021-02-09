@@ -4,3 +4,4 @@ eventos.json
 credentials.json
 token.pickle
 files/*.png
+last_update.txt
