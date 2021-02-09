@@ -77,8 +77,8 @@ def proxima_tesis():
   for evento in proximos_eventos(ID, 50, 1, "dias"):
     if evento['summary'].startswith("Defensa de Tesis"):
       hora = ""
-      inicio = str(evento['start'])
-      if len(inicio) > 20:
-        hora = formatear_hora(inicio[11:16])
-      return [evento['summary'][17:], hora]
-  return ["",""]
+      inicio = evento['start']
+      if 'dateTime' in inicio:
+        hora = formatear_hora(inicio['dateTime'][11:16])
+      res.append([evento['summary'][17:], hora])
+  return res

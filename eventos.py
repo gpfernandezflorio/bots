@@ -99,5 +99,14 @@ eventos_hc = [
             "canal": testing.id_canal_recordatorios,
             "funcion": "proximos_eventos_ralondario"
         }
+    },
+    {   "nombre":"TESIS",
+        "cuando":{"dia":"siempre", "hora":"9:00"},
+        "habilitado":True,
+        "accion":
+        {   "tipo":"CH_FILE",
+            "canal": testing.id_canal_recordatorios,
+            "funcion": "anuncio_proxima_tesis"
+        }
     }
 ]
