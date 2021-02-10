@@ -2,7 +2,8 @@ import discord
 from eventos import inicializar_eventos, listar_eventos
 from calendario import corresponde, obtener_eventos_siguientes
 from ralondario import proximos_eventos_ralondario, proxima_tesis
-from comandos import recibir_comando, ejecutar_comando_discord, ejecutar_comando_debug, ejecutar_comando_telegram, procesar_mensaje
+from comandos import recibir_comando, ejecutar_comando_discord, ejecutar_comando_debug, ejecutar_comando_telegram
+from triggers import procesar_mensaje
 from canales import agregar_canal, obtener_canal, inicializar_canales
 import tg
 import imageDraw
@@ -88,30 +89,34 @@ def conectar_debug():
 
 def debug_chat():
     while(True):
-        msg = input("SEND: ")
-        if len(msg)==0:
+        mensaje = input("SEND: ")
+        if len(mensaje)==0:
             break
-        info_comando = recibir_comando(msg)
+        info_comando = recibir_comando(mensaje)
         if info_comando["OK"]:
-            ejecutar_comando_debug(info_comando["comando"], info_comando["argumentos"], msg)
+            ejecutar_comando_debug(info_comando["comando"], info_comando["argumentos"], mensaje)
+        else:
+            respuesta = procesar_mensaje(mensaje)
+            if not (respuesta is None):
+                print(respuesta)
 
 def recibir_mensaje_telegram(mensaje):
-  respuesta = procesar_mensaje(mensaje["texto"])
-  if respuesta is None:
-      info_comando = recibir_comando(mensaje["texto"])
-      if info_comando["OK"]:
-          ejecutar_comando_telegram(info_comando["comando"], info_comando["argumentos"], mensaje)
-  else:
-      tg.mandar_texto(mensaje["chat_id"], respuesta, mensaje["msg_id"])
+    info_comando = recibir_comando(mensaje["texto"])
+    if info_comando["OK"]:
+        ejecutar_comando_telegram(info_comando["comando"], info_comando["argumentos"], mensaje)
+    else:
+        respuesta = procesar_mensaje(mensaje["texto"])
+        if not (respuesta is None):
+            tg.mandar_texto(mensaje["chat_id"], respuesta, mensaje["msg_id"])
 
 async def recibir_mensaje_discord(message):
-    respuesta = procesar_mensaje(message.content)
-    if respuesta is None:
-        info_comando = recibir_comando(message.content)
-        if info_comando["OK"]:
-            await ejecutar_comando_discord(info_comando["comando"], info_comando["argumentos"], message)
+    info_comando = recibir_comando(message.content)
+    if info_comando["OK"]:
+        await ejecutar_comando_discord(info_comando["comando"], info_comando["argumentos"], message)
     else:
-        await message.channel.send(respuesta)
+        respuesta = procesar_mensaje(message.content)
+        if not (respuesta is None):
+            await message.channel.send(respuesta)
 
 def anuncio_proxima_tesis():
     res = []

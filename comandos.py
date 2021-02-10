@@ -39,14 +39,6 @@ def recibir_comando(msg):
   info_comando["OK"] = True
   return info_comando
 
-def procesar_mensaje(txt):
-    if 'q onda?' in txt:
-        return 'q onda?'
-    for patron in ['felicitaciones','felicidades','felicito','feliz','congrats','congratulation']:
-        if patron in txt.lower():
-            return 'Felicitaciones Charly!'
-    return None
-
 async def ejecutar_comando_discord(comando, argumentos, msg):
     if (comando in comandos_validos):
         await comandos_validos[comando]['f_discord'](argumentos, msg)
