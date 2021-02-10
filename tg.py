@@ -23,10 +23,11 @@ def recibir_mensajes():
     f.close()
     ultima_actualizacion = int(line.strip(' \t\r\n'))
   actualizaciones = bot.get_updates(offset=ultima_actualizacion + 1).wait()
-  if len(actualizaciones) > 0:
-    f = open("last_update.txt", 'w')
-    f.write(str(actualizaciones[-1].update_id) + '\n')
-    f.close()
+  if (actualizaciones is None) or (len(actualizaciones)==0):
+    return []
+  f = open("last_update.txt", 'w')
+  f.write(str(actualizaciones[-1].update_id) + '\n')
+  f.close()
   actualizaciones_con_mensajes = filter(lambda x: not (x.message is None) and not (x.message.text is None), actualizaciones)
   mensajes = map(lambda x:
     # Devuelvo lo mensajes con la siguiente representación
