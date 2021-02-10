@@ -96,7 +96,7 @@ def debug_chat():
         if info_comando["OK"]:
             ejecutar_comando_debug(info_comando["comando"], info_comando["argumentos"], mensaje)
         else:
-            respuesta = procesar_mensaje(mensaje)
+            respuesta = procesar_mensaje(mensaje, "debug")
             if not (respuesta is None):
                 print(respuesta)
 
@@ -105,7 +105,7 @@ def recibir_mensaje_telegram(mensaje):
     if info_comando["OK"]:
         ejecutar_comando_telegram(info_comando["comando"], info_comando["argumentos"], mensaje)
     else:
-        respuesta = procesar_mensaje(mensaje["texto"])
+        respuesta = procesar_mensaje(mensaje["texto"], str(mensaje["chat_id"]))
         if not (respuesta is None):
             tg.mandar_texto(mensaje["chat_id"], respuesta, mensaje["msg_id"])
 
@@ -114,7 +114,7 @@ async def recibir_mensaje_discord(message):
     if info_comando["OK"]:
         await ejecutar_comando_discord(info_comando["comando"], info_comando["argumentos"], message)
     else:
-        respuesta = procesar_mensaje(message.content)
+        respuesta = procesar_mensaje(message.content, str(message.channel))
         if not (respuesta is None):
             await message.channel.send(respuesta)
 
