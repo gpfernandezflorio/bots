@@ -37,6 +37,10 @@ def recibir_mensajes():
 
     mensajes = mensajes_diccionario["result"]
 
+    # Para que no me falle el update
+    if len(mensajes) == 0:
+      return []
+
     f = open("last_update.txt", 'w')
     f.write(str(mensajes[-1]['update_id']) + '\n')
     f.close()
