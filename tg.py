@@ -28,10 +28,10 @@ def recibir_mensajes():
     #Llamar al metodo getUpdates del bot, utilizando un offset
     respuesta = requests.get(URL + "getUpdates" + "?offset=" + str(ultima_actualizacion+1))
     #Telegram devolvera todos los mensajes con id IGUAL o SUPERIOR al offset
-  
+
     #Decodificar la respuesta recibida a formato UTF8
     mensajes_js = respuesta.content.decode("utf8")
- 
+
     #Convertir el string de JSON a un diccionario de Python
     mensajes_diccionario = json.loads(mensajes_js)
 
@@ -44,9 +44,13 @@ def recibir_mensajes():
     f = open("last_update.txt", 'w')
     f.write(str(mensajes[-1]['update_id']) + '\n')
     f.close()
+    # Sólo mensajes de texto
     mensajes = filter(lambda x: ('message' in x) and ('text' in x['message']), mensajes)
+    if (testing.modo_testing):
+      # Sólo mensajes del grupo de test
+      mensajes = filter(lambda x: x["message"]["chat"]["id"]==testing.TG_GROUP, mensajes)
     mensajes = map(lambda x:
-      # Devuelvo lo mensajes con la siguiente representación
+      # Devuelvo los mensajes con la siguiente representación
       {"texto":x["message"]["text"], "chat_id":x["message"]["chat"]["id"], "msg_id":x["message"]["message_id"]},
       mensajes)
     return mensajes
