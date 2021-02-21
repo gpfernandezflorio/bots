@@ -84,7 +84,8 @@ async def conectar(cliente):
 def conectar_debug():
     inicializar_eventos()
     eventos_siguientes = obtener_eventos_siguientes(listar_eventos())
-    print(proximos_eventos_ralondario())
+    #print(proximos_eventos_ralondario())
+    #tg.mandar_archivo('-227382142', 'files/heman.jpg')
     debug_chat()
 
 def debug_chat():
