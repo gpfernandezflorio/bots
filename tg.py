@@ -44,6 +44,10 @@ def recibir_mensajes():
     f = open("last_update.txt", 'w')
     f.write(str(mensajes[-1]['update_id']) + '\n')
     f.close()
+
+    if (ultima_actualizacion == -1): # Para evitar repetir mensajes
+        return []
+
     # Sólo mensajes de texto
     mensajes = filter(lambda x: ('message' in x) and ('text' in x['message']), mensajes)
     if (testing.modo_testing):
