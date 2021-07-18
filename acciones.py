@@ -6,7 +6,9 @@ from comandos import recibir_comando, ejecutar_comando_discord, ejecutar_comando
 from triggers import procesar_mensaje
 from canales import agregar_canal, obtener_canal, inicializar_canales
 import tg
+import testing
 import imageDraw
+import datetime as dt
 
 eventos_siguientes = []
 
@@ -114,6 +116,9 @@ def recibir_mensaje_telegram(mensaje):
             tg.mandar_texto(mensaje["chat_id"], respuesta, mensaje["msg_id"])
 
 async def recibir_mensaje_discord(message):
+    if testing.modo_testing and message.guild.id != testing.id_servidor:
+        # Sólo mensajes del servidor de test
+        return
     info_comando = recibir_comando(message.content)
     if info_comando["OK"]:
         await ejecutar_comando_discord(info_comando["comando"], info_comando["argumentos"], message)
@@ -138,3 +143,9 @@ def imagen_proxima_tesis(tesis):
     imagen.escribir(hora_tesis, [450,170], tamanio=40, color=[255,255,255])
     imagen.guardar_imagen(outfile)
     return outfile
+
+def eventos_del_dia():
+  hoy = dt.datetime.now()
+  if (hoy.weekday() == 6):
+      return proximos_eventos_ralondario()
+  return proximos_eventos_ralondario({'dias':1})

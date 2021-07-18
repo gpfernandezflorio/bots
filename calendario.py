@@ -82,7 +82,6 @@ def calcular_fecha(dia, desde, hora):
         return desde.replace(hour=hora.hour, minute=hora.minute) + dt.timedelta(days=delta)
     return None
 
-
 def crear_fecha(cuando, hoy):
     hora = calcular_hora(cuando["hora"])
     if (hora is None):

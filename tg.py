@@ -50,7 +50,7 @@ def recibir_mensajes():
 
     # Sólo mensajes de texto
     mensajes = filter(lambda x: ('message' in x) and ('text' in x['message']), mensajes)
-    if (testing.modo_testing):
+    if testing.modo_testing:
       # Sólo mensajes del grupo de test
       mensajes = filter(lambda x: x["message"]["chat"]["id"]==testing.TG_GROUP, mensajes)
     mensajes = map(lambda x:

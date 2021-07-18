@@ -56,7 +56,7 @@ def data_accion(accion):
 
 eventos_hc = [
     {   "nombre":"ABRIR_LA_NORIEGA",
-        "cuando":{"dia":"lu-vi", "hora":"9:00"},
+        "cuando":{"dia":"lu-vi", "hora":"09:30"},
         "habilitado":True,
         "accion":
         {   "tipo":"CH_PERM",
@@ -93,17 +93,17 @@ eventos_hc = [
         }
     },
     {   "nombre":"RALONDARIO",
-        "cuando":{"dia":"siempre", "hora":"9:00"},
+        "cuando":{"dia":"siempre", "hora":"08:30"},
         "habilitado":True,
         "accion":
         {   "tipo":"CH_MSG",
             "canal": testing.id_canal_recordatorios,
-            "grupo": testing.TG_GROUP,
-            "funcion": "proximos_eventos_ralondario"
+            "grupo": -1001553265480,#testing.TG_GROUP,
+            "funcion": "eventos_del_dia"
         }
     },
     {   "nombre":"TESIS",
-        "cuando":{"dia":"siempre", "hora":"9:00"},
+        "cuando":{"dia":"siempre", "hora":"09:00"},
         "habilitado":True,
         "accion":
         {   "tipo":"CH_FILE",
