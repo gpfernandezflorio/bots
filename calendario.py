@@ -1,7 +1,7 @@
 import re
 import datetime as dt
 
-re_fecha_anio = re.compile('\d{1,2}/\d{1,2}/\d{4}')     # dd/mm/aaaa            1/2/1995 3/12/2005 40/0/2020
+re_fecha_año = re.compile('\d{1,2}/\d{1,2}/\d{4}')      # dd/mm/aaaa            1/2/1995 3/12/2005 40/0/2020
 re_fecha = re.compile('\d{1,2}/\d{1,2}')                # dd/mm                 1/2 10/6 5/15 20/20
 re_dias = re.compile('\w{2}-\w{2}')                     # d1-d2                 ma-vi ju-ma
 re_dia = re.compile('\w{2}')                            # di
@@ -20,7 +20,7 @@ def data_fecha(fecha):
         hora = " a las " + hora
     if (dia == "siempre"):
         dia = "Todos los días"
-    elif formato(dia, re_fecha_anio):
+    elif formato(dia, re_fecha_año):
         dia = dia.split("/")
         dia = "El " + dia[0] + " de " + nombres_meses[int(dia[1])-1] + " de " + dia[2]
     elif formato(dia, re_fecha):
@@ -50,13 +50,13 @@ def calcular_hora(hora):
 def calcular_fecha(dia, desde, hora):
     if dia == "siempre":
         return desde.replace(hour=hora.hour, minute=hora.minute)
-    if formato(dia, re_fecha_anio):
+    if formato(dia, re_fecha_año):
         d1 = dia.find("/")
         d2 = dia.find("/", d1+1)
-        anio = dia[d2+1:]
+        año = dia[d2+1:]
         mes = dia[d1+1:d2]
         dia = dia[:d1]
-        resultado = dt.datetime(year=int(anio), month=int(mes), day=int(dia), hour=hora.hour, minute=hora.minute)
+        resultado = dt.datetime(year=int(año), month=int(mes), day=int(dia), hour=hora.hour, minute=hora.minute)
         if resultado < desde:
             return None
         return resultado
