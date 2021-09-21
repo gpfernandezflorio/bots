@@ -35,6 +35,8 @@ def recibir_mensajes():
     #Convertir el string de JSON a un diccionario de Python
     mensajes_diccionario = json.loads(mensajes_js)
 
+    if not ('result' in mensajes_diccionario):
+        return []
     mensajes = mensajes_diccionario["result"]
 
     # Para que no me falle el update
