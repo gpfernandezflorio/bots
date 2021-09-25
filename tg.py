@@ -5,8 +5,15 @@ import testing
 
 URL = "https://api.telegram.org/bot" + testing.TG_TOKEN + "/"
 
+ultimo_mensaje_fue_una_pregunta = False
+
 def inicializar():
   pass
+
+def mandar_texto_revisando_ultimo_mensaje(chat_id, texto, respuesta_a=None):
+    if (ultimo_mensaje_fue_una_pregunta):
+        mandar_texto(chat_id, 'Lamento que nadie haya podido responderte pero tengo algo que decir.')
+    mandar_texto(chat_id, texto, respuesta_a)
 
 def mandar_texto(chat_id, texto, respuesta_a=None):
     #Llamar el metodo sendMessage del bot, passando el texto y la id del chat
@@ -19,6 +26,7 @@ def mandar_archivo(chat_id, ruta, respuesta_a=None):
     requests.post(URL + "sendPhoto?chat_id=" + str(chat_id) + "&reply_to_message_id=" + str(respuesta_a), files = files)
 
 def recibir_mensajes():
+    global ultimo_mensaje_fue_una_pregunta
     ultima_actualizacion = -1
     if os.path.exists("last_update.txt"):
       f = open("last_update.txt", 'r')
@@ -55,8 +63,9 @@ def recibir_mensajes():
     if testing.modo_testing:
       # Sólo mensajes del grupo de test
       mensajes = filter(lambda x: x["message"]["chat"]["id"]==testing.TG_GROUP, mensajes)
-    mensajes = map(lambda x:
+    mensajes = list(map(lambda x:
       # Devuelvo los mensajes con la siguiente representación
       {"texto":x["message"]["text"], "chat_id":x["message"]["chat"]["id"], "msg_id":x["message"]["message_id"]},
-      mensajes)
+      mensajes))
+    ultimo_mensaje_fue_una_pregunta = mensajes[-1]['texto'].endswith('?')
     return mensajes

@@ -37,13 +37,13 @@ async def realizar(accion):
                 if (a_discord):
                     await canal.send(valor)
                 if (a_telegram):
-                    tg.mandar_texto(grupo, valor)
+                    tg.mandar_texto_revisando_ultimo_mensaje(grupo, valor)
             elif type(valor) == type([]):
                 for v in valor:
                     if (a_discord):
                         await canal.send(v)
                     if (a_telegram):
-                        tg.mandar_texto(grupo, v)
+                        tg.mandar_texto_revisando_ultimo_mensaje(grupo, v)
     elif (accion["tipo"] == "CH_FILE"):
         if not (valor is None):
             if type(valor) == type(""):
