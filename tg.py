@@ -67,5 +67,6 @@ def recibir_mensajes():
       # Devuelvo los mensajes con la siguiente representación
       {"texto":x["message"]["text"], "chat_id":x["message"]["chat"]["id"], "msg_id":x["message"]["message_id"]},
       mensajes))
-    ultimo_mensaje_fue_una_pregunta = mensajes[-1]['texto'].endswith('?')
+    if len(mensajes) > 0:
+        ultimo_mensaje_fue_una_pregunta = mensajes[-1]['texto'].endswith('?')
     return mensajes
