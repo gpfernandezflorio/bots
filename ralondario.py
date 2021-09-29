@@ -60,7 +60,7 @@ def proximos_eventos_ralondario(info={}):
   fecha = ""
   if len(eventos) == 0:
       mensaje = "No tengo nada que reportar"
-  elif dias == 1:
+  elif dias == 0:
       mensaje = "Eventos del día:"
       fecha = eventos[0]["fecha"]
   if (monospace):

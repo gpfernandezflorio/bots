@@ -148,4 +148,4 @@ def eventos_del_dia():
   hoy = dt.datetime.now()
   if (hoy.weekday() == 6):
       return proximos_eventos_ralondario()
-  return proximos_eventos_ralondario({'dias':1})
+  return proximos_eventos_ralondario({'dias':0})
