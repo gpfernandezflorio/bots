@@ -59,7 +59,7 @@ def proximos_eventos_ralondario(info={}):
     eventos.append({"fecha":fecha,"texto":texto})
   fecha = ""
   if len(eventos) == 0:
-      mensaje = "No tengo nada que reportar"
+      mensaje = None #"No tengo nada que reportar"
   elif dias == 0:
       mensaje = "Eventos del día:"
       fecha = eventos[0]["fecha"]
