@@ -104,7 +104,9 @@ def c_man_debug(args, msg):
     print(man(args))
 
 async def c_ralondario_discord(args, msg):
-    await msg.channel.send(ralondario(args))
+    respuesta = ralondario(args)
+    if not (respuesta is None):
+        await msg.channel.send(ralondario(args))
 
 def c_ralondario_telegram(args, msg):
     respuesta = ralondario(args)
