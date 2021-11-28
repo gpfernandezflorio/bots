@@ -107,7 +107,9 @@ async def c_ralondario_discord(args, msg):
     await msg.channel.send(ralondario(args))
 
 def c_ralondario_telegram(args, msg):
-    tg.mandar_texto(msg["chat_id"], ralondario(args), msg["msg_id"])
+    respuesta = ralondario(args)
+    if not (respuesta is None):
+        tg.mandar_texto(msg["chat_id"], respuesta, msg["msg_id"])
 
 def c_ralondario_debug(args, msg):
     print(ralondario(args))
@@ -119,6 +121,8 @@ def ralondario(args):
         try:
             n = int(arg)
             info["cantidad"] = n
+            if n < 1:
+                return None
             info["recortar_en"] = "cantidad"
         except:
             fecha = arg.split("/")
