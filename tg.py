@@ -5,13 +5,13 @@ import testing
 
 URL = "https://api.telegram.org/bot" + testing.TG_TOKEN + "/"
 
-ultimo_mensaje_fue_una_pregunta = False
+ultimo_mensaje_fue_una_pregunta = {}
 
 def inicializar():
   pass
 
 def mandar_texto_revisando_ultimo_mensaje(chat_id, texto, respuesta_a=None):
-    if (ultimo_mensaje_fue_una_pregunta):
+    if (ultimo_mensaje_fue_una_pregunta.get(chat_id, False)):
         mandar_texto(chat_id, 'Lamento que nadie haya podido responderte pero tengo algo que decir.')
     mandar_texto(chat_id, texto, respuesta_a)
 
@@ -68,6 +68,6 @@ def recibir_mensajes():
       # Devuelvo los mensajes con la siguiente representación
       {"texto":x["message"]["text"], "chat_id":x["message"]["chat"]["id"], "msg_id":x["message"]["message_id"]},
       mensajes))
-    if len(mensajes) > 0:
-        ultimo_mensaje_fue_una_pregunta = mensajes[-1]['texto'].endswith('?')
+    for msg in msgs:
+        ultimo_mensaje_fue_una_pregunta[msg['chat_id']] = msg['texto'].endswith('?')
     return mensajes
