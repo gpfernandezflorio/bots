@@ -3,6 +3,10 @@ from eventos import listar_eventos, data_evento
 from ralondario import proximos_eventos_ralondario
 import datetime as dt
 import tg
+import discord
+
+urlFlan = 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png'
+fileFlan = "files/flan.png"
 
 def es_para_mi(msg):
     comando = None
@@ -52,13 +56,22 @@ def ejecutar_comando_debug(comando, argumentos, msg):
         comandos_validos[comando]['f_debug'](argumentos, msg)
 
 async def c_flan_discord(args, msg):
-    await msg.channel.send('https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png')
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'v'):
+        await msg.channel.send(urlFlan)
+    elif len(args) > 0 and args[0] == 'n':
+        await msg.channel.send(file=discord.File(fileFlan))
 
 def c_flan_telegram(args, msg):
-    tg.mandar_texto(msg["chat_id"], 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png', msg["msg_id"])
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'v'):
+        tg.mandar_texto(msg["chat_id"], urlFlan, msg["msg_id"])
+    elif len(args) > 0 and args[0] == 'n':
+        tg.mandar_archivo(msg["chat_id"], fileFlan)
 
 def c_flan_debug(args, msg):
-    print('https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png')
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'v'):
+        print(urlFlan)
+    elif len(args) > 0 and args[0] == 'n':
+        print(fileFlan)
 
 def recordatorios(args):
     txt = "Lista de tareas:"
@@ -160,7 +173,8 @@ comandos_validos = {
         "f_debug":c_flan_debug,
         "ayuda":[
             "Ver el plan de estudios",
-            "Responde con la imagen del grafo con el plan de estudios. No toma argumentos."
+            "Responde con la imagen del grafo con el plan de estudios.",
+            "Se le puede pasar 'n' para el nuevo o 'v' para el viejo."
         ]
     },
     "tasks":{
