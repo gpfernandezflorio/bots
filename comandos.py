@@ -95,6 +95,22 @@ def c_recordatorios_telegram(args, msg):
 def c_recordatorios_debug(args, msg):
     print(recordatorios(args))
 
+origenes = [
+    {
+        'claves': ['cubawiki'],
+        'rta': "CUBA = Computación UBA\n\nO sea.. es meme, pero tiene sentido."
+    }
+]
+
+def porque(args):
+    if len(args) == 0:
+        return "Tenés que pasarme como argumento aquello sobre lo que querés saber el origen."
+    clave = args[0].lower()
+    for o in origenes:
+        if clave in o['claves']:
+            return o['rta']
+    return "No conozco el origen de eso."
+
 def man(args):
     txt = "Lista de comandos:"
     if len(args) == 0:
@@ -106,6 +122,15 @@ def man(args):
             return "[[" + nombre + "]]\n" + comandos_validos[nombre]["ayuda"][1]
         txt = "Comando inexistente: " + nombre
     return txt
+
+async def c_porque_discord(args, msg):
+    await msg.channel.send(porque(args))
+
+def c_porque_telegram(args, msg):
+    tg.mandar_texto(msg["chat_id"], porque(args), msg["msg_id"])
+
+def c_porque_debug(args, msg):
+    print(porque(args))
 
 async def c_man_discord(args, msg):
     await msg.channel.send(man(args))
@@ -165,6 +190,16 @@ comandos_validos = {
             "Responde con la lista de comandos y una breve descripción de cada uno. " +
             "Si se le pasa como argumento el nombre de un comando en lugar de listarlos todos devuelve los detalles de dicho comando. " +
             "Ejemplos: \"man\" para la lista de comandos ; \"man man\" para los detalles del comando man."
+        ]
+    },
+    "porque":{
+        "f_discord":c_porque_discord,
+        "f_telegram":c_porque_telegram,
+        "f_debug":c_porque_debug,
+        "ayuda":[
+            "Preguntar por qué algo está hecho de esa forma",
+            "Responde con el origen de alguna de esas cosas que en 10 años van a preguntar wtf por qué esto está hecho así.",
+            "Se le debe pasar como argumento aquello de lo cual se quiere conocer su origen."
         ]
     },
     "flan":{
