@@ -10,6 +10,9 @@ def inicializar():
 def mandar_texto(chat_id, texto, respuesta_a=None):
     bot.send_message(chat_id, texto, reply_to_message_id=respuesta_a)
 
+def mandar_sticker(chat_id, sticker_file_id, respuesta_a=None):
+    pass # TODO
+
 def mandar_archivo(chat_id, ruta, respuesta_a=None):
     fp = open(ruta, 'rb')
     file_info = tb.InputFileInfo(ruta, fp, 'image/png')
