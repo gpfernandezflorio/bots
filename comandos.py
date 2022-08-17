@@ -6,6 +6,7 @@ import datetime as dt
 import tg
 import discord
 
+urlPlanos = {'0':{'0':'https://exactas.uba.ar/wp-content/uploads/2022/03/0I-aulas.pdf'}}
 urlFlan = 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png'
 fileFlan = "files/flan.png"
 
@@ -182,6 +183,46 @@ def c_sticker_telegram(args, msg):
 def c_sticker_debug(args, msg):
     print("Mandar " + args[1] + " a " + args[0])
 
+
+async def c_plano_discord(args, msg):
+    if len(args) == 0:
+        await msg.channel.send("¿Plano de qué?")
+        return
+    if args[0] in urlPlanos:
+        if len(args) == 1:
+            await msg.channel.send("¿De qué piso?")
+            return
+        if args[1] in urlPlanos[args[0]]:
+            await msg.channel.send(urlPlanos[args[0]][args[1]])
+            return
+    await msg.channel.send("No tengo esos planos")
+
+def c_plano_telegram(args, msg):
+    if len(args) == 0:
+        tg.mandar_texto(msg["chat_id"], "¿Plano de qué?", msg["msg_id"])
+        return
+    if args[0] in urlPlanos:
+        if len(args) == 1:
+            tg.mandar_texto(msg["chat_id"], "¿De qué piso?", msg["msg_id"])
+            return
+        if args[1] in urlPlanos[args[0]]:
+            tg.mandar_texto(msg["chat_id"], urlPlanos[args[0]][args[1]], msg["msg_id"])
+            return
+    tg.mandar_texto(msg["chat_id"], "No tengo esos planos", msg["msg_id"])
+
+def c_plano_debug(args, msg):
+    if len(args) == 0:
+        print("¿Plano de qué?")
+        return
+    if args[0] in urlPlanos:
+        if len(args) == 1:
+            print("¿De qué piso?")
+            return
+        if args[1] in urlPlanos[args[0]]:
+            print(urlPlanos[args[0]][args[1]])
+            return
+    print("No tengo esos planos")
+
 async def c_ralondario_discord(args, msg):
     respuesta = ralondario(args)
     if not (respuesta is None):
@@ -284,6 +325,17 @@ comandos_validos = {
             "Envía un sticker a un grupo o canal. " +
             "Se le debe pasar como argumento un id de grupo o de canal y un id de sticker. " +
             "Ejemplos: \"sticker 0042 2400\" para mandar el sticker de id 2400 al grupo o canal con id 0042 (debe ser un id válido en el que tenga permisos para mandar mensajes)."
+        ]
+    },
+    "plano":{
+        "f_discord":c_plano_discord,
+        "f_telegram":c_plano_telegram,
+        "f_debug":c_plano_debug,
+        "ayuda":[
+            "Ver el plano de un piso de un edificio",
+            "Responde con el plano de un piso de uno de los edificios de Exactas.",
+            "Se le debe pasar como argumento un número de pabellón (0, 1 o 2) y un número de piso (0, o 1).",
+            "Ejemplos: \"plano 0 0\" para los planos de la planta baja del cero más infinito."
         ]
     },
     "cal":{
