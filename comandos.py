@@ -262,6 +262,15 @@ def ralondario(args):
                     pass
     return proximos_eventos_ralondario(info)
 
+async def c_gracias_discord(args, msg):
+    await msg.channel.send("De nada")
+
+def c_gracias_telegram(args, msg):
+    tg.mandar_texto(msg["chat_id"], "De nada", msg["msg_id"])
+
+def c_gracias_debug(args, msg):
+    print("De nada")
+
 comandos_validos = {
     "man":{
         "f_discord":c_man_discord,
@@ -349,6 +358,15 @@ comandos_validos = {
             "Si se le pasa como argumento una fecha (dos números separados por una diagonal) devuelve todos los eventos hasta esa fecha inclusive. " +
             "Si no se le pasa ningún argumento muestra hasta 10 eventos dentro de los próximos 7 días. " +
             "Ejemplos: \"cal\" para ver hasta 10 eventos de la próxima semana ; \"cal 5\" para ver los próximos 5 eventos ; \"cal 10/5\" para ver los eventos hasta el 10 de mayo."
+        ]
+    },
+    "gracias":{
+        "f_discord":c_gracias_discord,
+        "f_telegram":c_gracias_telegram,
+        "f_debug":c_gracias_debug,
+        "ayuda":[
+            "Agradecer",
+            "Responde al agradecimiento."
         ]
     }
 }
