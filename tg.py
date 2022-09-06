@@ -23,6 +23,9 @@ def mandar_texto(chat_id, texto, respuesta_a=None):
 def mandar_sticker(chat_id, sticker_file_id, respuesta_a=None):
     requests.get(URL + "sendSticker?sticker=" + sticker_file_id + "&chat_id=" + str(chat_id) + "&reply_to_message_id=" + str(respuesta_a))
 
+def mandar_imagen_por_id(chat_id, pic_file_id, caption=None, respuesta_a=None):
+    requests.post(URL + "sendPhoto?photo=" + pic_file_id + "&chat_id=" + str(chat_id) + "&caption=" + str(caption) + "&reply_to_message_id=" + str(respuesta_a))
+
 def mandar_archivo(chat_id, ruta, respuesta_a=None):
     files = {
       'photo': open(ruta, 'rb')

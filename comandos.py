@@ -183,6 +183,21 @@ def c_sticker_telegram(args, msg):
 def c_sticker_debug(args, msg):
     print("Mandar " + args[1] + " a " + args[0])
 
+async def c_pic_discord(args, msg):
+    await msg.channel.send("Aún no implementado")
+
+def c_pic_telegram(args, msg):
+    if (len(args) < 2):
+        tg.mandar_texto(msg["chat_id"], "Faltan argumentos", msg["msg_id"])
+    else:
+        try:
+            tg.mandar_imagen_por_id(args[0], args[1], " ".join(args[2:]))
+        except Exception as e:
+            tg.mandar_texto(msg["chat_id"], "Id de canal o de imagen inválido", msg["msg_id"])
+
+def c_pic_debug(args, msg):
+    print("Mandar " + args[1] + " a " + args[0])
+
 
 async def c_plano_discord(args, msg):
     if len(args) == 0:
@@ -334,6 +349,17 @@ comandos_validos = {
             "Envía un sticker a un grupo o canal. " +
             "Se le debe pasar como argumento un id de grupo o de canal y un id de sticker. " +
             "Ejemplos: \"sticker 0042 2400\" para mandar el sticker de id 2400 al grupo o canal con id 0042 (debe ser un id válido en el que tenga permisos para mandar mensajes)."
+        ]
+    },
+    "pic":{
+        "f_discord":c_pic_discord,
+        "f_telegram":c_pic_telegram,
+        "f_debug":c_pic_debug,
+        "ayuda":[
+            "Enviar una imagen",
+            "Envía una imagen a un grupo o canal. " +
+            "Se le debe pasar como argumento un id de grupo o de canal y un id de imagen. También se le puede pasar un mensaje como epígrafe. " +
+            "Ejemplos: \"pic 0042 2400\" para mandar la imagen de id 2400 al grupo o canal con id 0042 sin epígrafe ; \"pic 0042 2400 Hola, ¿cómo te va?\" para mandar la imagen de id 2400 al grupo o canal con id 0042 con el epígrafe \"Hola, ¿cómo te va?\" (debe ser un id válido en el que tenga permisos para mandar mensajes)."
         ]
     },
     "plano":{
