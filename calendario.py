@@ -1,5 +1,5 @@
 import re
-import datetime as dt
+from fechayhora import nueva_fecha_hora, justo_ahora, fecha_desde_str, nuevo_horario, delta_dias, dia_de_hoy
 
 re_fecha_año = re.compile('\d{1,2}/\d{1,2}/\d{4}')      # dd/mm/aaaa            1/2/1995 3/12/2005 40/0/2020
 re_fecha = re.compile('\d{1,2}/\d{1,2}')                # dd/mm                 1/2 10/6 5/15 20/20
@@ -44,7 +44,7 @@ def calcular_hora(hora):
         dp = hora.find(":")
         minutos = hora[dp+1:]
         hora = hora[:dp]
-        return dt.time(hour=int(hora), minute=int(minutos))
+        return nuevo_horario(int(hora), int(minutos))
     return None
 
 def calcular_fecha(dia, desde, hora):
@@ -56,7 +56,7 @@ def calcular_fecha(dia, desde, hora):
         año = dia[d2+1:]
         mes = dia[d1+1:d2]
         dia = dia[:d1]
-        resultado = dt.datetime(year=int(año), month=int(mes), day=int(dia), hour=hora.hour, minute=hora.minute)
+        resultado = nueva_fecha_hora(int(año), int(mes), int(dia), hora.hour, hora.minute)
         if resultado < desde:
             return None
         return resultado
@@ -76,10 +76,10 @@ def calcular_fecha(dia, desde, hora):
             while(hoy < d1 and hoy > d2):
                 hoy = (hoy+1)%7
         delta = (hoy - desde.weekday()) % 7
-        return desde.replace(hour=hora.hour, minute=hora.minute) + dt.timedelta(days=delta)
+        return desde.replace(hour=hora.hour, minute=hora.minute) + delta_dias(delta)
     if formato(dia, re_dia):
         delta = (dias.index(dia) - desde.weekday()) % 7
-        return desde.replace(hour=hora.hour, minute=hora.minute) + dt.timedelta(days=delta)
+        return desde.replace(hour=hora.hour, minute=hora.minute) + delta_dias(delta)
     return None
 
 def crear_fecha(cuando, hoy):
@@ -88,11 +88,11 @@ def crear_fecha(cuando, hoy):
         return None
     # Me fijo si hoy ya pasó
     if hora < hoy.time():
-        return calcular_fecha(cuando["dia"], hoy + dt.timedelta(days=1), hora)
+        return calcular_fecha(cuando["dia"], hoy + delta_dias(1), hora)
     return calcular_fecha(cuando["dia"], hoy, hora)
 
 def obtener_eventos_siguientes(lista_de_eventos):
-    hoy = dt.datetime.now().replace(second=0, microsecond=0)
+    hoy = justo_ahora().replace(second=0, microsecond=0)
     proxima_fecha = None
     eventos = []
     for evento in lista_de_eventos:
@@ -112,7 +112,7 @@ def obtener_eventos_siguientes(lista_de_eventos):
     return [proxima_fecha] + eventos
 
 def corresponde(cuando):
-    hoy = dt.datetime.now().replace(second=0, microsecond=0)
+    hoy = justo_ahora().replace(second=0, microsecond=0)
     return cuando == hoy
 
 def formatear_fecha(txt, monospace=False):
@@ -140,10 +140,10 @@ def formatear_fecha(txt, monospace=False):
     mes_n = int(txt[5:7])
     dia_s = str(dia_n)
     mes_s = str(mes_n)
-  hoy = dt.date.today()
+  hoy = dia_de_hoy()
   if (hoy.day == dia_n and hoy.month == mes_n):
     return "HOY"
-  fecha = dt.datetime.strptime(txt, '%Y-%m-%d').date()
-  if (fecha == hoy + dt.timedelta(days=1)):
+  fecha = fecha_desde_str(txt)
+  if (fecha == hoy + delta_dias(1)):
     return "Mañana"
   return "El " + nombre_dias[fecha.weekday()] + " " + dia_s + "/" + mes_s

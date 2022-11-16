@@ -3,7 +3,7 @@ import discord
 from discord.ext import tasks
 from dotenv import load_dotenv
 from acciones import conectar, conectar_debug, acciones_programadas, recibir_mensaje_discord, recibir_mensaje_telegram
-from datetime import datetime
+from fechayhora import justo_ahora
 import tg
 
 INICIADO = False
@@ -39,7 +39,7 @@ def main():
             if not INICIADO:
                 una_vez_por_minuto.start()
                 INICIADO = True
-            print(str(datetime.now()) + " READY")
+            print(str(justo_ahora()) + " READY")
 
         client.run(DISCORD_TOKEN)
 

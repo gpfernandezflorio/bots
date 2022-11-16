@@ -1,14 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-#from icalevents import icaldownload, icalparser
-from datetime import datetime, timedelta
-from pytz import timezone
-from googleapi import cargar_calendario_google_api
+from fechayhora import justo_ahora, delta_dias
 
-# Devuelve el momento actual con nuestra zona horaria.
-def aware_now():
-    return datetime.now(tz=timezone('America/Buenos_Aires'))
+#from icalevents import icaldownload, icalparser
+from googleapi import cargar_calendario_google_api
 
 # Genero la url del calendario a partir del id
 def __calendar_url(i):
@@ -19,8 +15,8 @@ def __calendar_url(i):
 def cargar_calendario_icalevents(i, cantidad, rango_dias, corte, retries):
     # TODO: Considerar el argumento "corte"
     url = __calendar_url(i)
-    now = aware_now()
-    span = timedelta(days=rango_dias)
+    now = justo_ahora()
+    span = delta_dias(rango_dias)
     start = (now - span)
     end = (now + span)
     while retries > 0:

@@ -8,7 +8,7 @@ from canales import agregar_canal, obtener_canal, inicializar_canales
 import tg
 import testing
 import imageDraw
-import datetime as dt
+from fechayhora import justo_ahora
 
 eventos_siguientes = []
 
@@ -145,7 +145,6 @@ def imagen_proxima_tesis(tesis):
     return outfile
 
 def eventos_del_dia():
-  hoy = dt.datetime.now()
-  if (hoy.weekday() == 6):
+  if (justo_ahora().weekday() == 6):
       return proximos_eventos_ralondario()
   return proximos_eventos_ralondario({'dias':0})

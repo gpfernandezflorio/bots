@@ -5,6 +5,7 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from fechayhora import dia_de_hoy, fecha_desde_str
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
@@ -46,7 +47,7 @@ def cargar_calendario_google_api(ID, n, rango_dias, corte):
                                         orderBy='startTime').execute()
     eventos = events_result.get('items', [])
     if corte == "ambos" or corte == "dias":
-        hoy = datetime.date.today()
+        hoy = dia_de_hoy()
         ultimo = obtener_ultimo_valido(eventos, hoy, rango_dias)
         if ultimo == len(eventos):
             if corte == "dias":
@@ -73,7 +74,7 @@ def fecha_evento(evento):
         inicio = inicio['dateTime'][:10]
     else:
         inicio = '2100-01-01'
-    return datetime.datetime.strptime(inicio, '%Y-%m-%d').date()
+    return fecha_desde_str(inicio)
 
 def pedir_mas_eventos(service, ultimo, ID, n, rango_dias, hoy):
     mas_eventos = []

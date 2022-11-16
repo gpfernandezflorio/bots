@@ -2,7 +2,7 @@ import testing
 from eventos import listar_eventos, data_evento
 from ralondario import proximos_eventos_ralondario
 from canales import obtener_canal
-import datetime as dt
+from fechayhora import dia_de_hoy, nueva_fecha
 import tg
 import discord
 
@@ -267,8 +267,8 @@ def ralondario(args):
                 try:
                     dia = int(fecha[0])
                     mes = int(fecha[1])
-                    hoy = dt.date.today()
-                    fecha = dt.date(hoy.year, mes, dia)
+                    hoy = dia_de_hoy()
+                    fecha = nueva_fecha(hoy.year, mes, dia)
                     if fecha < hoy:
                         fecha = fecha.replace(year = fecha.year + 1)
                     info["dias"] = (fecha - hoy).days

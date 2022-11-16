@@ -1,4 +1,4 @@
-import datetime as dt
+from fechayhora import justo_ahora
 
 H = 2 # Cantidad de horas entre un trigger y el siguiente
 
@@ -28,7 +28,7 @@ def activar_trigger(i, trigger, txt, grupo):
     return {"OK":False} # trigger no activado; seguir buscando
 
 def corresponde_mandarlo(trigger, grupo):
-    ahora = dt.datetime.now()
+    ahora = justo_ahora()
     ultimo_enviado = trigger.get("ts", None)
     if ultimo_enviado is None:
         trigger["ts"] = {}
