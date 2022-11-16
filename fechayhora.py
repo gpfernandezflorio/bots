@@ -20,4 +20,5 @@ def justo_ahora():
     return dt.datetime.now(tz=timezone('America/Buenos_Aires'))
 
 def dia_de_hoy():
-    return justo_ahora()
+    ahora = justo_ahora()
+    return nueva_fecha(ahora.year, ahora.month, ahora.day)
