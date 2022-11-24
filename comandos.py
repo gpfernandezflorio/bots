@@ -1,6 +1,7 @@
 import testing
 from eventos import listar_eventos, data_evento
 from ralondario import proximos_eventos_ralondario
+from comedor import menu_comedor
 from canales import obtener_canal
 from fechayhora import dia_de_hoy, nueva_fecha
 import tg
@@ -238,10 +239,41 @@ def c_plano_debug(args, msg):
             return
     print("No tengo esos planos")
 
+async def c_menu_discord(args, msg):
+    respuesta = menu(args)
+    if not (respuesta is None):
+        await msg.channel.send(respuesta)
+
+def c_menu_telegram(args, msg):
+    respuesta = menu(args)
+    if not (respuesta is None):
+        tg.mandar_texto(msg["chat_id"], respuesta, msg["msg_id"])
+
+def c_menu_debug(args, msg):
+    print(menu(args))
+
+def menu(args):
+    info = {}
+    if len(args) > 0:
+        arg = args[0]
+        fecha = arg.split("/")
+        if len(fecha) == 2:
+            try:
+                dia = int(fecha[0])
+                mes = int(fecha[1])
+                hoy = dia_de_hoy()
+                fecha = nueva_fecha(hoy.year, mes, dia)
+                if fecha < hoy:
+                    fecha = fecha.replace(year = fecha.year + 1)
+                info["fecha"] = fecha
+            except Exception as e:
+                print(e)
+    return menu_comedor(info)
+
 async def c_ralondario_discord(args, msg):
     respuesta = ralondario(args)
     if not (respuesta is None):
-        await msg.channel.send(ralondario(args))
+        await msg.channel.send(respuesta)
 
 def c_ralondario_telegram(args, msg):
     respuesta = ralondario(args)
@@ -326,6 +358,17 @@ comandos_validos = {
             "Ver el plan de estudios",
             "Responde con la imagen del grafo con el plan de estudios.",
             "Se le puede pasar 'n' para el nuevo o 'v' para el viejo."
+        ]
+    },
+    "menu":{
+        "f_discord":c_menu_discord,
+        "f_telegram":c_menu_telegram,
+        "f_debug":c_menu_debug,
+        "ayuda":[
+            "Ver el menú del comedor",
+            "Responde con el menú universitario del comedor de la facultad.",
+            "Se le puede como parámetro una fecha en formato dd/mm para obtener el menú de un día particular.",
+            "Si no se le pasa ningún parámetro devuelve el menú del día actual."
         ]
     },
     "tasks":{

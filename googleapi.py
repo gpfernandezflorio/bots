@@ -79,16 +79,30 @@ def fecha_evento(evento):
 def pedir_mas_eventos(service, ultimo, ID, n, rango_dias, hoy):
     mas_eventos = []
     inicio = fecha_evento(ultimo)
-    while((inicio-hoy).days <= rango_dias):
+    intentos = 10
+    while((inicio-hoy).days <= rango_dias and intentos > 0):
         mas = service.events().list(calendarId=ID, timeMin=datetime.datetime.fromordinal(inicio.toordinal()).isoformat() + 'Z',
-                                        maxResults=n, singleEvents=True,
+                                        maxResults=50, singleEvents=True,
                                         orderBy='startTime').execute()
         mas = mas.get('items', [])
-        mas_eventos += mas
+        mas_eventos = agregar_sin_repetidos_(mas_eventos, mas)
         if len(mas) < n:
             break
         inicio = fecha_evento(mas_eventos[-1])
+        intentos = intentos-1
     return mas_eventos[:obtener_ultimo_valido(mas_eventos, hoy, rango_dias)]
+
+def agregar_sin_repetidos_(src, mas):
+    for nuevo in mas:
+        if not esta_repetido_en(nuevo, src):
+            src.append(nuevo)
+    return src
+
+def esta_repetido_en(nuevo, eventos):
+    for evento in eventos:
+        if evento['start']['date'] == nuevo['start']['date'] and evento['summary'] == nuevo['summary']:
+            return True
+    return False
 
 if __name__ == '__main__':
     eventos = cargar_calendario_google_api(None, 10)
