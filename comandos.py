@@ -318,6 +318,16 @@ comandos_validos = {
             "Se le puede pasar 'n' para el nuevo o 'v' para el viejo."
         ]
     },
+    "plan":{
+        "f_discord":c_flan_discord,
+        "f_telegram":c_flan_telegram,
+        "f_debug":c_flan_debug,
+        "ayuda":[
+            "Ver el plan de estudios",
+            "Responde con la imagen del grafo con el plan de estudios.",
+            "Se le puede pasar 'n' para el nuevo o 'v' para el viejo."
+        ]
+    },
     "tasks":{
         "f_discord":c_recordatorios_discord,
         "f_telegram":c_recordatorios_telegram,
