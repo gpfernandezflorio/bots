@@ -322,11 +322,11 @@ def c_gracias_debug(args, msg):
 
 async def c_test_discord(args, msg):
     await msg.channel.send("DEBUG")
-    # await msg.channel.send(file=discord.File(imagen_proxima_tesis(["Pepe grillo", "10:45"])))
+    await msg.channel.send(file=discord.File(imagen_proxima_tesis(["Pepe grillo", "10:45"])))
 
 def c_test_telegram(args, msg):
     tg.mandar_texto(msg["chat_id"], "DEBUG", msg["msg_id"])
-    # tg.mandar_archivo(msg["chat_id"], imagen_proxima_tesis(["Pepe grillo", "10:45"]))
+    tg.mandar_archivo(msg["chat_id"], imagen_proxima_tesis(["Pepe grillo", "10:45"]))
 
 def c_test_debug(args, msg):
     print("DEBUG")
@@ -480,7 +480,7 @@ comandos_validos = {
 def imagen_proxima_tesis(tesis):
     tesista = tesis[0]
     hora_tesis = tesis[1]
-    outfile = "files/"+tesista.replace(" ","_")+".png"
+    outfile = "tmp/"+tesista.replace(" ","_")+".png"
     imagen = imageDraw.abrir_imagen("files/heman.jpg")
     imagen.escribir(tesista, [120,120], tamaño=30, color=[255,255,255])
     imagen.escribir(hora_tesis, [450,170], tamaño=40, color=[255,255,255])

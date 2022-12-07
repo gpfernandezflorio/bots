@@ -3,5 +3,5 @@ __pycache__
 eventos.json
 credentials.json
 token.pickle
-files/*.png
+tmp
 last_update.txt
