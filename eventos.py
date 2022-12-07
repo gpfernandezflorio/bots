@@ -106,7 +106,7 @@ eventos_hc = [
         "cuando":{"dia":"siempre", "hora":"09:00"},
         "habilitado":True,
         "accion":
-        {   "tipo":"CH_FILE",
+        {   "tipo":"CH_MSG", # "CH_FILE",
             "canal": testing.id_canal_recordatorios,
             "grupo": testing.TG_GROUP,
             "funcion": "anuncio_proxima_tesis"

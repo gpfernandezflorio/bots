@@ -130,7 +130,8 @@ def anuncio_proxima_tesis():
     res = []
     tesis = proxima_tesis()
     for t in tesis:
-        res.append(imagen_proxima_tesis(t))
+        # res.append(imagen_proxima_tesis(t))
+        res.append("¡Felicitaciones " + t[0] + "!")
     return res
 
 def eventos_del_dia():
