@@ -6,6 +6,7 @@ from canales import obtener_canal
 from fechayhora import dia_de_hoy, nueva_fecha
 import tg
 import discord
+import imageDraw
 
 urlPlanos = {'0':{'0':'https://exactas.uba.ar/wp-content/uploads/2022/03/0I-aulas.pdf'}}
 urlFlan = 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png'
@@ -118,7 +119,8 @@ def man(args):
     txt = "Lista de comandos:"
     if len(args) == 0:
         for comando in comandos_validos.keys():
-            txt += "\n " + comando + " - " + comandos_validos[comando]["ayuda"][0]
+            if not ('hidden' in comandos_validos[comando]):
+                txt += "\n " + comando + " - " + comandos_validos[comando]["ayuda"][0]
     else:
         nombre = args[0]
         if nombre in comandos_validos:
@@ -318,6 +320,17 @@ def c_gracias_telegram(args, msg):
 def c_gracias_debug(args, msg):
     print("De nada")
 
+async def c_test_discord(args, msg):
+    await msg.channel.send("DEBUG")
+    # await msg.channel.send(file=discord.File(imagen_proxima_tesis(["Pepe grillo", "10:45"])))
+
+def c_test_telegram(args, msg):
+    tg.mandar_texto(msg["chat_id"], "DEBUG", msg["msg_id"])
+    # tg.mandar_archivo(msg["chat_id"], imagen_proxima_tesis(["Pepe grillo", "10:45"]))
+
+def c_test_debug(args, msg):
+    print("DEBUG")
+
 comandos_validos = {
     "man":{
         "f_discord":c_man_discord,
@@ -351,6 +364,7 @@ comandos_validos = {
         ]
     },
     "plan":{
+        "hidden":True,
         "f_discord":c_flan_discord,
         "f_telegram":c_flan_telegram,
         "f_debug":c_flan_debug,
@@ -383,6 +397,7 @@ comandos_validos = {
         ]
     },
     "say":{
+        "hidden":True,
         "f_discord":c_decir_discord,
         "f_telegram":c_decir_telegram,
         "f_debug":c_decir_debug,
@@ -394,6 +409,7 @@ comandos_validos = {
         ]
     },
     "sticker":{
+        "hidden":True,
         "f_discord":c_sticker_discord,
         "f_telegram":c_sticker_telegram,
         "f_debug":c_sticker_debug,
@@ -405,6 +421,7 @@ comandos_validos = {
         ]
     },
     "pic":{
+        "hidden":True,
         "f_discord":c_pic_discord,
         "f_telegram":c_pic_telegram,
         "f_debug":c_pic_debug,
@@ -447,5 +464,25 @@ comandos_validos = {
             "Agradecer",
             "Responde al agradecimiento."
         ]
+    },
+    "test":{
+        "hidden":True,
+        "f_discord":c_test_discord,
+        "f_telegram":c_test_telegram,
+        "f_debug":c_test_debug,
+        "ayuda":[
+            "Test",
+            "Para debuggear."
+        ]
     }
 }
+
+def imagen_proxima_tesis(tesis):
+    tesista = tesis[0]
+    hora_tesis = tesis[1]
+    outfile = "files/"+tesista.replace(" ","_")+".png"
+    imagen = imageDraw.abrir_imagen("files/heman.jpg")
+    imagen.escribir(tesista, [120,120], tamaño=30, color=[255,255,255])
+    imagen.escribir(hora_tesis, [450,170], tamaño=40, color=[255,255,255])
+    imagen.guardar_imagen(outfile)
+    return outfile

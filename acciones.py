@@ -2,12 +2,11 @@ import discord
 from eventos import inicializar_eventos, listar_eventos
 from calendario import corresponde, obtener_eventos_siguientes
 from ralondario import proximos_eventos_ralondario, proxima_tesis
-from comandos import recibir_comando, ejecutar_comando_discord, ejecutar_comando_debug, ejecutar_comando_telegram
+from comandos import recibir_comando, ejecutar_comando_discord, ejecutar_comando_debug, ejecutar_comando_telegram, imagen_proxima_tesis
 from triggers import procesar_mensaje
 from canales import agregar_canal, obtener_canal, inicializar_canales
 import tg
 import testing
-import imageDraw
 from fechayhora import justo_ahora
 
 eventos_siguientes = []
@@ -133,16 +132,6 @@ def anuncio_proxima_tesis():
     for t in tesis:
         res.append(imagen_proxima_tesis(t))
     return res
-
-def imagen_proxima_tesis(tesis):
-    tesista = tesis[0]
-    hora_tesis = tesis[1]
-    outfile = "files/"+tesista.replace(" ","_")+".png"
-    imagen = imageDraw.abrir_imagen("files/heman.jpg")
-    imagen.escribir(tesista, [120,120], tamaño=30, color=[255,255,255])
-    imagen.escribir(hora_tesis, [450,170], tamaño=40, color=[255,255,255])
-    imagen.guardar_imagen(outfile)
-    return outfile
 
 def eventos_del_dia():
   if (justo_ahora().weekday() == 6):
