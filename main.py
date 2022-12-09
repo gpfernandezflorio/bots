@@ -12,7 +12,8 @@ def main():
     load_dotenv()
     DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
     DEBUG = os.getenv('DEBUG')=="YES"
-    os.makedirs('tmp')
+    if (not os.path.isdir('tmp')):
+        os.makedirs('tmp')
 
     @tasks.loop(minutes=1)
     async def una_vez_por_minuto():
