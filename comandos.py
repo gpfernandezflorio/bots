@@ -8,7 +8,25 @@ import tg
 import discord
 # import imageDraw
 
-urlPlanos = {'0':{'0':'https://exactas.uba.ar/wp-content/uploads/2022/03/0I-aulas.pdf'}}
+urlPlanos = {'0':{
+                '0':'https://exactas.uba.ar/wp-content/uploads/2022/03/0I-aulas.pdf'
+                },
+             '1':{
+                '0':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PI_PB_HYS-A4.pdf',
+                '1':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2022/08/PI_1oP-A3.pdf',
+                '2':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PI_2%C2%BAP_HYS-A4.pdf'
+                },
+             '2':{
+                'ss':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PII_SS-A4.pdf',
+                'es':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2022/08/PII_ES-A3.pdf',
+                '0':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PII_PB-A4-1.pdf',
+                'pb':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PII_PB-A4-1.pdf',
+                '1':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PII_1%C2%BAP-A4.pdf',
+                'ep':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PII_EP-A4-1.pdf',
+                '3':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PII_3%C2%BAP-A4.pdf',
+                '4':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PII_4%C2%BAP-A4.pdf'
+                }
+            }
 urlFlan = 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png'
 fileFlan = "files/flan.png"
 
@@ -201,45 +219,32 @@ def c_pic_telegram(args, msg):
 def c_pic_debug(args, msg):
     print("Mandar " + args[1] + " a " + args[0])
 
-
 async def c_plano_discord(args, msg):
-    if len(args) == 0:
-        await msg.channel.send("¿Plano de qué?")
-        return
-    if args[0] in urlPlanos:
-        if len(args) == 1:
-            await msg.channel.send("¿De qué piso?")
-            return
-        if args[1] in urlPlanos[args[0]]:
-            await msg.channel.send(urlPlanos[args[0]][args[1]])
-            return
-    await msg.channel.send("No tengo esos planos")
+    await msg.channel.send(buscar_plano(args))
 
 def c_plano_telegram(args, msg):
-    if len(args) == 0:
-        tg.mandar_texto(msg["chat_id"], "¿Plano de qué?", msg["msg_id"])
-        return
-    if args[0] in urlPlanos:
-        if len(args) == 1:
-            tg.mandar_texto(msg["chat_id"], "¿De qué piso?", msg["msg_id"])
-            return
-        if args[1] in urlPlanos[args[0]]:
-            tg.mandar_texto(msg["chat_id"], urlPlanos[args[0]][args[1]], msg["msg_id"])
-            return
-    tg.mandar_texto(msg["chat_id"], "No tengo esos planos", msg["msg_id"])
+    tg.mandar_texto(msg["chat_id"], buscar_plano(args), msg["msg_id"])
 
 def c_plano_debug(args, msg):
+    print(buscar_plano(args))
+
+def listar(elementos):
+    if len(elementos) == 1:
+        return elementos[0]
+    return ', '.join(elementos[:-1]) + ' y ' + elementos[-1]
+
+def buscar_plano(args):
+    lista_pabellones = list(urlPlanos.keys())
     if len(args) == 0:
-        print("¿Plano de qué?")
-        return
+        return "¿De qué pabellón? Tengo planos de los siguientes pabellones: " + listar(lista_pabellones)
     if args[0] in urlPlanos:
+        lista_pisos = list(urlPlanos[args[0]].keys())
         if len(args) == 1:
-            print("¿De qué piso?")
-            return
+            return "¿De qué piso? Tengo planos de los siguientes pisos del pabellón " + args[0] + ": " + listar(lista_pisos)
         if args[1] in urlPlanos[args[0]]:
-            print(urlPlanos[args[0]][args[1]])
-            return
-    print("No tengo esos planos")
+            return urlPlanos[args[0]][args[1]]
+        return "No tengo esos planos. Tengo planos de los siguientes pisos del pabellón " + args[0] + ": " + listar(lista_pisos)
+    return "No tengo esos planos. Tengo planos de los siguientes pabellones: " + listar(lista_pabellones)
 
 async def c_menu_discord(args, msg):
     respuesta = menu(args)
