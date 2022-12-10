@@ -11,7 +11,7 @@ import discord
 urlPlanos = {
   '0':{
     'pb':'https://drive.google.com/file/d/1Z3j_ykPwzqe48Rwt7p-jRvmjn3VGq16j/view?usp=share_link',
-    '1':'https://drive.google.com/file/d/1-SVgAzbGiSD1uTnj2CIFAKGB3tJ5A4_C/view?usp=share_link',
+    '1':'https://drive.google.com/file/d/1-SVgAzbGiSD1uTnj2CIFAKGB3tJ5A4_C/view?usp=share_link'
     },
   '1':{
     'pb':'https://exactas.uba.ar/higieneyseguridad/wp-content/uploads/2020/02/PI_PB_HYS-A4.pdf',
@@ -51,7 +51,7 @@ gps = {
            'C.A.M. Meteorología (2404)','DIAIFCC (Cambio Climático) (2405)','2406','2407','2408',
            '2500','2501','2502','2503','2504','2505','2506','2507','2508','2509',
            '2510','2511','2512','2513','2514','2515','2516','2517','2518','2519',
-           '2520','2521','2522','2523','2524','2525','2526','2527','2528','2529'
+           '2520','2521','2522','2523','2524','2525','2526','2527','2528','2529',
            '2530','2531',
            '2600','2601','2602','2603','2604','2605','2606','2607','2608','2609',
            '2610','2611','2612','2613','2614','2615','2616','2617','2618','2619',
@@ -67,7 +67,7 @@ gps = {
     'pb':{'Aula':['Seminario'],
           'Laboratorio':['1','2','3','4','5','6','Epsilon',
             'B27','B28','B30','B31','B32','B33','B34','B35','B36','B37','B38','B39','B41','B42','B43',
-            'de Sistemas Complejos','Líquidos Criogénicos','de Bajas Temperaturas','Serv. de Elect.'
+            'de Sistemas Complejos','Líquidos Criogénicos','de Bajas Temperaturas','Serv. de Elect.',
             'Física Aplicada 1','Física Aplicada 2','Física Aplicada 3','Física Aplicada 4',
             'Emprendimientos 1','Emprendimientos 2','Emprendimientos 3 A','Emprendimientos 3 B',
             'Física del Plasma','de Tecnología de Plasma'],
