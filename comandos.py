@@ -214,22 +214,22 @@ def ejecutar_comando_debug(comando, argumentos, msg):
         comandos_validos[comando]['f_debug'](argumentos, msg)
 
 async def c_flan_discord(args, msg):
-    if len(args) == 0 or (len(args) > 0 and args[0] == 'v'):
-        await msg.channel.send(urlFlan)
-    elif len(args) > 0 and args[0] == 'n':
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'n'):
         await msg.channel.send(file=discord.File(fileFlan))
+    elif len(args) > 0 and args[0] == 'v':
+        await msg.channel.send(urlFlan)
 
 def c_flan_telegram(args, msg):
-    if len(args) == 0 or (len(args) > 0 and args[0] == 'v'):
-        tg.mandar_texto(msg["chat_id"], urlFlan, msg["msg_id"])
-    elif len(args) > 0 and args[0] == 'n':
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'n'):
         tg.mandar_archivo(msg["chat_id"], fileFlan)
+    elif len(args) > 0 and args[0] == 'v':
+        tg.mandar_texto(msg["chat_id"], urlFlan, msg["msg_id"])
 
 def c_flan_debug(args, msg):
-    if len(args) == 0 or (len(args) > 0 and args[0] == 'v'):
-        print(urlFlan)
-    elif len(args) > 0 and args[0] == 'n':
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'n'):
         print(fileFlan)
+    elif len(args) > 0 and args[0] == 'v':
+        print(urlFlan)
 
 def recordatorios(args):
     txt = "Lista de tareas:"

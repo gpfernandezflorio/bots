@@ -6,18 +6,22 @@ def procesar_mensaje(txt, grupo):
     for trigger in triggers:
         i = trigger["in"]
         if type(i) == type(""):
-            res = activar_trigger(i, trigger, txt, grupo)
+            res = activar_trigger(i in txt.lower(), trigger, txt, grupo)
             if res["OK"]:
                 return res["txt"]
         elif type(i) == type([]):
             for p in i:
-                res = activar_trigger(p, trigger, txt, grupo)
+                res = activar_trigger(p in txt.lower(), trigger, txt, grupo)
                 if res["OK"]:
                     return res["txt"]
+        elif type(i) == type(lambda x : x):
+            res = activar_trigger(i(txt), trigger, txt, grupo)
+            if res["OK"]:
+                return res["txt"]
     return None
 
-def activar_trigger(i, trigger, txt, grupo):
-    if i in txt.lower():
+def activar_trigger(c, trigger, txt, grupo):
+    if c:
         if corresponde_mandarlo(trigger, grupo):
             o = trigger["out"]
             if type(o) == type(""):
@@ -41,8 +45,16 @@ def corresponde_mandarlo(trigger, grupo):
     tiempoTranscurrido = ahora - ultimo_enviado
     return tiempoTranscurrido.total_seconds() > 3600*H
 
+def es_faq_nuevo_plan(txt):
+    txt_lower = txt.lower()
+    return 'plan' in txt_lower and ('nuevo' in txt_lower or 'cambio' in txt_lower)
+
+def faqs_nuevo_plan(txt):
+    return 'No te preocupes, no te vas a quedar sin poder cursar. Cada materia del plan viejo tiene equivalencia con alguna del plan nuevo. Además, no es obligatorio cambiarte de plan. Podés seguir cursando el plan viejo aunque curses materias del plan nuevo por equivalencia.\n\nMás información:\nhttps://docs.google.com/document/d/e/2PACX-1vSlD-djaJcnw45-41ugO5yGqNl5hA_dKOAikyRDAh5QzsrToBi2XWPzU1i0ldDAbNct0rx2AfhuBf19/pub'
+
 triggers = [
     {"in": 'q onda?', "out": 'q onda?'},
     {"in": ['felicitaciones','felicidades','felicito','feliz','congrats','congratulation'],
-    "out": 'Felicitaciones Charly!'}
+        "out": 'Felicitaciones Charly!'},
+    {"in": es_faq_nuevo_plan, "out": faqs_nuevo_plan}
 ]
