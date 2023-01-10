@@ -540,6 +540,15 @@ def c_gracias_telegram(args, msg):
 def c_gracias_debug(args, msg):
     print("De nada")
 
+async def c_dalu_discord(args, msg):
+    await msg.channel.send("dalu@de.fcen.uba.ar")
+
+def c_dalu_telegram(args, msg):
+    tg.mandar_texto(msg["chat_id"], "dalu@de.fcen.uba.ar", msg["msg_id"])
+
+def c_dalu_debug(args, msg):
+    print("dalu@de.fcen.uba.ar")
+
 async def c_test_discord(args, msg):
     await msg.channel.send("DEBUG")
     await msg.channel.send(file=discord.File(imagen_proxima_tesis(["Pepe grillo", "10:45"])))
@@ -694,6 +703,15 @@ comandos_validos = {
         "ayuda":[
             "Agradecer",
             "Responde al agradecimiento."
+        ]
+    },
+    "dalu":{
+        "f_discord":c_dalu_discord,
+        "f_telegram":c_dalu_telegram,
+        "f_debug":c_dalu_debug,
+        "ayuda":[
+            "Mail de Dalu",
+            "Responde con el mail de la Dirección de Estudiantes."
         ]
     },
     "test":{
