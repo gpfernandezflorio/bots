@@ -42,7 +42,7 @@ def proximos_eventos_ralondario(info={}):
   cantidad = info.get("cantidad", 10)
   monospace = info.get("monospace", False)
   recortar_en = info.get("recortar_en", "ambos") # puede ser "dias", "cantidad" o "ambos"
-  mensaje = "Pŕoximos eventos:"
+  mensaje = "Próximos eventos:"
   eventos = []
   for evento in proximos_eventos(ID, cantidad, dias, recortar_en):
     nombre = formatear_nombre(evento['summary'], evento.get('description',''))
