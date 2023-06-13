@@ -257,6 +257,10 @@ origenes = [
     {
         'claves': ['cubawiki'],
         'rta': "CUBA = Computación UBA\n\nO sea.. es meme, pero tiene sentido.\n\nBah, es un mix de eso y el chiste de q son cosas comunitarias de la gente de la carrera para gente de la carrera :)"
+    },
+    {
+        'claves': ['flan'],
+        'rta': "Porque se parece a \"plan\"."
     }
 ]
 
