@@ -165,6 +165,7 @@ gps = {
 
 urlFlan = 'https://www.cubawiki.com.ar/images/a/a0/Plandeestudios.png'
 fileFlan = "files/flan.png"
+fileFlanLCD = "files/flan_lcd.png"
 
 def es_para_mi(msg):
     comando = None
@@ -218,18 +219,24 @@ async def c_flan_discord(args, msg):
         await msg.channel.send(file=discord.File(fileFlan))
     elif len(args) > 0 and args[0] == 'v':
         await msg.channel.send(urlFlan)
+    elif len(args) > 0 and args[0] == 'd':
+        await msg.channel.send(file=discord.File(fileFlanLCD))
 
 def c_flan_telegram(args, msg):
     if len(args) == 0 or (len(args) > 0 and args[0] == 'n'):
         tg.mandar_archivo(msg["chat_id"], fileFlan)
     elif len(args) > 0 and args[0] == 'v':
         tg.mandar_texto(msg["chat_id"], urlFlan, msg["msg_id"])
+    elif len(args) > 0 and args[0] == 'd':
+        tg.mandar_archivo(msg["chat_id"], fileFlanLCD)
 
 def c_flan_debug(args, msg):
     if len(args) == 0 or (len(args) > 0 and args[0] == 'n'):
         print(fileFlan)
     elif len(args) > 0 and args[0] == 'v':
         print(urlFlan)
+    elif len(args) > 0 and args[0] == 'd':
+        print(fileFlanLCD)
 
 def recordatorios(args):
     txt = "Lista de tareas:"
@@ -593,7 +600,7 @@ comandos_validos = {
         "ayuda":[
             "Ver el plan de estudios",
             "Responde con la imagen del grafo con el plan de estudios.",
-            "Se le puede pasar 'n' para el nuevo o 'v' para el viejo."
+            "Se le puede pasar 'n' para el nuevo, 'v' para el viejo o 'd' para el de LCD."
         ]
     },
     "plan":{
@@ -604,7 +611,7 @@ comandos_validos = {
         "ayuda":[
             "Ver el plan de estudios",
             "Responde con la imagen del grafo con el plan de estudios.",
-            "Se le puede pasar 'n' para el nuevo o 'v' para el viejo."
+            "Se le puede pasar 'n' para el nuevo, 'v' para el viejo o 'd' para el de LCD."
         ]
     },
     "menu":{
