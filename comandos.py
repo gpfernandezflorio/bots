@@ -268,7 +268,11 @@ origenes = [
     {
         'claves': ['flan'],
         'rta': "Porque se parece a \"plan\"."
-    }
+    },
+    {
+        'claves': ['dalu'],
+        'rta': "Porque originalmente se llamaba \"Departamento de ALUmnos\". D + ALU = DALU."
+        }
 ]
 
 def porque(args):
