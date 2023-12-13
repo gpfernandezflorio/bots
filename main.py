@@ -25,7 +25,8 @@ def main():
     if (DEBUG):
         conectar_debug()
     else:
-        client = discord.Client()
+        intents = discord.Intents.default()
+        client = discord.Client(intents=intents)
         tg.inicializar()
 
         @client.event
