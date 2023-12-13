@@ -50,7 +50,7 @@ def es_faq_nuevo_plan(txt):
     return 'plan' in txt_lower and ('nuevo' in txt_lower or 'cambio' in txt_lower)
 
 def faqs_nuevo_plan(txt):
-    return 'No te preocupes, no te vas a quedar sin poder cursar. Cada materia del plan viejo tiene equivalencia con alguna del plan nuevo. Además, no es obligatorio cambiarte de plan. Podés seguir cursando el plan viejo aunque curses materias del plan nuevo por equivalencia.\n\nMás información:\nhttps://docs.google.com/document/d/e/2PACX-1vSlD-djaJcnw45-41ugO5yGqNl5hA_dKOAikyRDAh5QzsrToBi2XWPzU1i0ldDAbNct0rx2AfhuBf19/pub'
+    return '¿Tenés dudas sobre el cambio de plan?\nRevisá las FAQs de CubaWiki:\n\https://www.cubawiki.com.ar/index.php/Faq/cursada/plan'
 
 triggers = [
     {"in": 'q onda?', "out": 'q onda?'},
