@@ -50,7 +50,7 @@ def es_faq_nuevo_plan(txt):
     return 'plan' in txt_lower and ('nuevo' in txt_lower or 'cambio' in txt_lower)
 
 def faqs_nuevo_plan(txt):
-    return '¿Tenés dudas sobre el cambio de plan?\nRevisá las FAQs de CubaWiki:\n\https://www.cubawiki.com.ar/index.php/Faq/cursada/plan'
+    return '¿Tenés dudas sobre el cambio de plan?\nRevisá las FAQs de CubaWiki:\nhttps://www.cubawiki.com.ar/index.php/Faq/cursada/plan'
 
 triggers = [
     {"in": 'q onda?', "out": 'q onda?'},
