@@ -24,7 +24,7 @@ def main_sin_discord():
     print(str(justo_ahora()) + " READY")
     import time
     while True:
-        time.sleep(1000)
+        time.sleep(1)
 
 def main_con_discord():
     DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')

@@ -316,13 +316,13 @@ def c_man_debug(args, msg):
     print(man(args))
 
 async def c_horarios_discord(args, msg):
-    await msg.channel.send("https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA/edit#gid=415738922")
+    await msg.channel.send("https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA")
 
 def c_horarios_telegram(args, msg):
-    tg.mandar_texto(msg["chat_id"], "https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA/edit#gid=415738922", msg["msg_id"])
+    tg.mandar_texto(msg["chat_id"], "https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA", msg["msg_id"])
 
 def c_horarios_debug(args, msg):
-    pass
+    print("https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA")
 
 async def c_decir_discord(args, msg):
     if (len(args) < 2):
@@ -631,7 +631,10 @@ comandos_validos = {
         "f_discord":c_horarios_discord,
         "f_telegram":c_horarios_telegram,
         "f_debug":c_horarios_debug,
-        "ayuda":[""]
+        "ayuda":[
+            "Ver los horarios de las materias",
+            "Responde con el link a la planilla con los horarios de cada materia"
+        ]
     },
     "menu":{
         "f_discord":c_menu_discord,

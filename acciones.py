@@ -109,7 +109,6 @@ def debug_chat():
                 print(respuesta)
 
 def recibir_mensaje_telegram(mensaje):
-    print(mensaje["texto"])
     info_comando = recibir_comando(mensaje["texto"])
     if info_comando["OK"]:
         ejecutar_comando_telegram(info_comando["comando"], info_comando["argumentos"], mensaje)
