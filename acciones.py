@@ -74,8 +74,11 @@ async def acciones_programadas():
             # TODO: Si era un evento de una única vez, eliminarlo
         eventos_siguientes = []
 
-async def conectar(cliente):
+def conectar_sin_discord():
     inicializar_eventos()
+
+async def conectar_con_discord(cliente):
+    conectar_sin_discord()
     inicializar_canales()
     if (cliente):
         for guild in cliente.guilds:
@@ -83,7 +86,7 @@ async def conectar(cliente):
                 agregar_canal(guild, c)
 
 def conectar_debug():
-    inicializar_eventos()
+    conectar_sin_discord()
     ## DEBUG:
     #eventos_siguientes = obtener_eventos_siguientes(listar_eventos())
     #print(proximos_eventos_ralondario())
@@ -106,6 +109,7 @@ def debug_chat():
                 print(respuesta)
 
 def recibir_mensaje_telegram(mensaje):
+    print(mensaje["texto"])
     info_comando = recibir_comando(mensaje["texto"])
     if info_comando["OK"]:
         ejecutar_comando_telegram(info_comando["comando"], info_comando["argumentos"], mensaje)
@@ -130,8 +134,8 @@ def anuncio_proxima_tesis():
     res = []
     tesis = proxima_tesis()
     for t in tesis:
-        # res.append(imagen_proxima_tesis(t))
-        res.append("¡Felicitaciones " + t[0] + "!")
+        res.append(imagen_proxima_tesis(t))
+        # res.append("¡Felicitaciones " + t[0] + "!")
     return res
 
 def eventos_del_dia():
