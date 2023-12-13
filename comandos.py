@@ -315,6 +315,15 @@ def c_man_telegram(args, msg):
 def c_man_debug(args, msg):
     print(man(args))
 
+async def c_horarios_discord(args, msg):
+    await msg.channel.send("https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA/edit#gid=415738922")
+
+def c_horarios_telegram(args, msg):
+    tg.mandar_texto(msg["chat_id"], "https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA/edit#gid=415738922", msg["msg_id"])
+
+def c_horarios_debug(args, msg):
+    pass
+
 async def c_decir_discord(args, msg):
     if (len(args) < 2):
         await msg.channel.send("Faltan argumentos")
@@ -617,6 +626,12 @@ comandos_validos = {
             "Responde con la imagen del grafo con el plan de estudios.",
             "Se le puede pasar 'n' para el nuevo, 'v' para el viejo o 'd' para el de LCD."
         ]
+    },
+    "horarios":{
+        "f_discord":c_horarios_discord,
+        "f_telegram":c_horarios_telegram,
+        "f_debug":c_horarios_debug,
+        "ayuda":[""]
     },
     "menu":{
         "f_discord":c_menu_discord,
