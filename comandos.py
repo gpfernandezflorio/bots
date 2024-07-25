@@ -320,13 +320,22 @@ def c_man_debug(args, msg):
     print(man(args))
 
 async def c_horarios_discord(args, msg):
-    await msg.channel.send("https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA")
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'n'):
+        await msg.channel.send("https://docs.google.com/spreadsheets/d/1N3vAuC_vvODUe1LHiFuaVxEArBUBRPVhqq22_wuVp6E")
+    elif len(args) > 0 and args[0] == 'v':
+        await msg.channel.send("https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA")
 
 def c_horarios_telegram(args, msg):
-    tg.mandar_texto(msg["chat_id"], "https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA", msg["msg_id"])
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'n'):
+        tg.mandar_texto(msg["chat_id"], "https://docs.google.com/spreadsheets/d/1N3vAuC_vvODUe1LHiFuaVxEArBUBRPVhqq22_wuVp6E", msg["msg_id"])
+    elif len(args) > 0 and args[0] == 'v':
+        tg.mandar_texto(msg["chat_id"], "https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA", msg["msg_id"])
 
 def c_horarios_debug(args, msg):
-    print("https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA")
+    if len(args) == 0 or (len(args) > 0 and args[0] == 'n'):
+        print("https://docs.google.com/spreadsheets/d/1N3vAuC_vvODUe1LHiFuaVxEArBUBRPVhqq22_wuVp6E")
+    elif len(args) > 0 and args[0] == 'v':
+        print("https://docs.google.com/spreadsheets/d/1x3ji1bgcWlV14BY5x-KYttg140PshUv6RpJzPdFh8MA")
 
 async def c_decir_discord(args, msg):
     if (len(args) < 2):
@@ -637,7 +646,8 @@ comandos_validos = {
         "f_debug":c_horarios_debug,
         "ayuda":[
             "Ver los horarios de las materias",
-            "Responde con el link a la planilla con los horarios de cada materia"
+            "Responde con el link a la planilla con los horarios de cada materia.",
+            "Se le puede pasar 'n' para las del plan nuevo o 'v' para las del viejo."
         ]
     },
     "menu":{
@@ -748,7 +758,7 @@ comandos_validos = {
         "f_debug":c_dalu_debug,
         "ayuda":[
             "Mail de Dalu",
-            "Responde con el mail de la Dirección de Estudiantes."
+            "Responde con el mail de la Dirección de Estudiantes y Graduados (dalu)."
         ]
     },
     "test":{
