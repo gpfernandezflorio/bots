@@ -28,9 +28,9 @@ def formatear_evento_cuatrimestre(E, C):
         C = "l segundo cuatrimestre"
     else:
         C = " " + C.lower()
-    if ('encuestas' in E) or ('materias' in E) or ('cursada' in E):
+    if ('encuestas' in E.lower()) or ('materias' in E.lower()) or ('cursada' in E.lower()):
         return E + ' de' + C
-    if 'inscripción' in E:
+    if 'inscripción' in E.lower():
         return E + ' a' + C
     return C + " - " + E
 
