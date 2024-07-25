@@ -56,5 +56,11 @@ triggers = [
     {"in": 'q onda?', "out": 'q onda?'},
     {"in": ['felicitaciones','felicidades','felicito','feliz','congrats','congratulation'],
         "out": 'Felicitaciones Charly!'},
-    {"in": es_faq_nuevo_plan, "out": faqs_nuevo_plan}
+    {"in": es_faq_nuevo_plan, "out": faqs_nuevo_plan},
+    {"in": 'dalu', "out": "La dirección de Estudiantes y graduados (dalu) atiende de 12 a 18. También podés mandarles mail a dalu@de.fcen.uba.ar."},
+    {"in": 'gracias tina', "out": "Es \"tina gracias\"."},
+    {"in": ['wifi','wi-fi','wi fi'],
+      "out": "En el pabellón cero casi nunca anda el wi-fi pero acá tenés algunas opciones:\n\n*Red*:EVENTO\n*Contraseña*:UBA-2022\n\n*Red*:Comedor\n*Contraseña*:UBA1865!\n\n*Red*:UBA-WiFi\nEsta red es pública pero para tener conexión tenés que iniciar sesión con tu usuario de la UBA. Si todavía no lo creaste podés hacerlo desde https://wifi.uba.ar/ (habiéndote conectado a la red)."},
+    {"in": ['secretaria','secretaría'],
+      "out": "La secretaría del DC atiende en la oficina 1502 del pabellón 0 de 13 a 20. No atienden por mail pero podés comunicarte abriendo un ticket en https://secretaria.dc.uba.ar/."}
 ]
