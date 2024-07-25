@@ -602,8 +602,7 @@ comandos_validos = {
         "f_discord":c_man_discord,
         "f_telegram":c_man_telegram,
         "f_debug":c_man_debug,
-        "ayuda":[
-            "Ver lista de comandos",
+        "ayuda":["Ver lista de comandos",
             "Responde con la lista de comandos y una breve descripción de cada uno. " +
             "Si se le pasa como argumento el nombre de un comando en lugar de listarlos todos devuelve los detalles de dicho comando. " +
             "Ejemplos: \"man\" para la lista de comandos ; \"man man\" para los detalles del comando man."
@@ -613,9 +612,8 @@ comandos_validos = {
         "f_discord":c_porque_discord,
         "f_telegram":c_porque_telegram,
         "f_debug":c_porque_debug,
-        "ayuda":[
-            "Preguntar por qué algo está hecho de esa forma",
-            "Responde con el origen de alguna de esas cosas que en 10 años van a preguntar wtf por qué esto está hecho así.",
+        "ayuda":["Preguntar por qué algo está hecho de esa forma",
+            "Responde con el origen de alguna de esas cosas que en 10 años van a preguntar wtf por qué esto está hecho así. " +
             "Se le debe pasar como argumento aquello de lo cual se quiere conocer su origen."
         ]
     },
@@ -623,9 +621,8 @@ comandos_validos = {
         "f_discord":c_flan_discord,
         "f_telegram":c_flan_telegram,
         "f_debug":c_flan_debug,
-        "ayuda":[
-            "Ver el plan de estudios",
-            "Responde con la imagen del grafo con el plan de estudios.",
+        "ayuda":["Ver el plan de estudios",
+            "Responde con la imagen del grafo con el plan de estudios. " +
             "Se le puede pasar 'n' para el nuevo, 'v' para el viejo o 'd' para el de LCD."
         ]
     },
@@ -634,9 +631,8 @@ comandos_validos = {
         "f_discord":c_flan_discord,
         "f_telegram":c_flan_telegram,
         "f_debug":c_flan_debug,
-        "ayuda":[
-            "Ver el plan de estudios",
-            "Responde con la imagen del grafo con el plan de estudios.",
+        "ayuda":["Ver el plan de estudios",
+            "Responde con la imagen del grafo con el plan de estudios. " +
             "Se le puede pasar 'n' para el nuevo, 'v' para el viejo o 'd' para el de LCD."
         ]
     },
@@ -644,9 +640,8 @@ comandos_validos = {
         "f_discord":c_horarios_discord,
         "f_telegram":c_horarios_telegram,
         "f_debug":c_horarios_debug,
-        "ayuda":[
-            "Ver los horarios de las materias",
-            "Responde con el link a la planilla con los horarios de cada materia.",
+        "ayuda":["Ver los horarios de las materias",
+            "Responde con el link a la planilla con los horarios de cada materia. " +
             "Se le puede pasar 'n' para las del plan nuevo o 'v' para las del viejo."
         ]
     },
@@ -654,10 +649,9 @@ comandos_validos = {
         "f_discord":c_menu_discord,
         "f_telegram":c_menu_telegram,
         "f_debug":c_menu_debug,
-        "ayuda":[
-            "Ver el menú del comedor",
-            "Responde con el menú universitario del comedor de la facultad.",
-            "Se le puede como parámetro una fecha en formato dd/mm para obtener el menú de un día particular.",
+        "ayuda":["Ver el menú del comedor",
+            "Responde con el menú universitario del comedor de la facultad. " +
+            "Se le puede como parámetro una fecha en formato dd/mm para obtener el menú de un día particular. " +
             "Si no se le pasa ningún parámetro devuelve el menú del día actual."
         ]
     },
@@ -677,10 +671,9 @@ comandos_validos = {
         "f_discord":c_decir_discord,
         "f_telegram":c_decir_telegram,
         "f_debug":c_decir_debug,
-        "ayuda":[
-            "Enviar un mensaje personalizado",
+        "ayuda":["Enviar un mensaje personalizado",
             "Envía un mensaje de texto a un grupo o canal. " +
-            "Se le debe pasar como argumento un id de grupo o de canal y un mensaje de al menos una palabra. " +
+            "Se le debe pasar como argumento un id de grupo o de canal y un mensaje de al menos una palabra.\n\n" +
             "Ejemplos: \"say 0042 Buenos días\" para mandar \"Buenos días\" al grupo o canal con id 0042 (debe ser un id válido en el que tenga permisos para mandar mensajes)."
         ]
     },
@@ -689,10 +682,9 @@ comandos_validos = {
         "f_discord":c_sticker_discord,
         "f_telegram":c_sticker_telegram,
         "f_debug":c_sticker_debug,
-        "ayuda":[
-            "Enviar un sticker",
+        "ayuda":["Enviar un sticker",
             "Envía un sticker a un grupo o canal. " +
-            "Se le debe pasar como argumento un id de grupo o de canal y un id de sticker. " +
+            "Se le debe pasar como argumento un id de grupo o de canal y un id de sticker.\n\n" +
             "Ejemplos: \"sticker 0042 2400\" para mandar el sticker de id 2400 al grupo o canal con id 0042 (debe ser un id válido en el que tenga permisos para mandar mensajes)."
         ]
     },
@@ -701,10 +693,9 @@ comandos_validos = {
         "f_discord":c_pic_discord,
         "f_telegram":c_pic_telegram,
         "f_debug":c_pic_debug,
-        "ayuda":[
-            "Enviar una imagen",
+        "ayuda":["Enviar una imagen",
             "Envía una imagen a un grupo o canal. " +
-            "Se le debe pasar como argumento un id de grupo o de canal y un id de imagen. También se le puede pasar un mensaje como epígrafe. " +
+            "Se le debe pasar como argumento un id de grupo o de canal y un id de imagen. También se le puede pasar un mensaje como epígrafe.\n\n" +
             "Ejemplos: \"pic 0042 2400\" para mandar la imagen de id 2400 al grupo o canal con id 0042 sin epígrafe ; \"pic 0042 2400 Hola, ¿cómo te va?\" para mandar la imagen de id 2400 al grupo o canal con id 0042 con el epígrafe \"Hola, ¿cómo te va?\" (debe ser un id válido en el que tenga permisos para mandar mensajes)."
         ]
     },
@@ -712,10 +703,9 @@ comandos_validos = {
         "f_discord":c_plano_discord,
         "f_telegram":c_plano_telegram,
         "f_debug":c_plano_debug,
-        "ayuda":[
-            "Ver el plano de un piso de un edificio",
-            "Responde con el plano de un piso de uno de los edificios de Exactas.",
-            "Se le debe pasar como argumento un número de pabellón (0, 1 o 2) y un número de piso (0, o 1).",
+        "ayuda":["Ver el plano de un piso de un edificio",
+            "Responde con el plano de un piso de uno de los edificios de Exactas. " +
+            "Se le debe pasar como argumento un número de pabellón (0, 1 o 2) y un número de piso (0, o 1).\n\n" +
             "Ejemplos: \"plano 0 0\" para los planos de la planta baja del cero más infinito."
         ]
     },
@@ -723,10 +713,9 @@ comandos_validos = {
         "f_discord":c_gps_discord,
         "f_telegram":c_gps_telegram,
         "f_debug":c_gps_debug,
-        "ayuda":[
-            "Ubicar un aula, laboratorio u otro lugar de la facultad",
-            "Responde con una lista de lugares y sus ubicaciones.",
-            "Se le debe pasar como argumento el nombre del lugar que se quiere ubicar (o parte del mismo).",
+        "ayuda":["Ubicar un aula, laboratorio u otro lugar de la facultad",
+            "Responde con una lista de lugares y sus ubicaciones. " +
+            "Se le debe pasar como argumento el nombre del lugar que se quiere ubicar (o parte del mismo).\n\n" +
             "Ejemplos: \"gps aula 10\" para buscar todas las aulas con número 10 ; \"gps biblioteca\" para buscar todas las bibliotecas."
         ]
     },
@@ -734,12 +723,11 @@ comandos_validos = {
         "f_discord":c_ralondario_discord,
         "f_telegram":c_ralondario_telegram,
         "f_debug":c_ralondario_debug,
-        "ayuda":[
-            "Mostrar calendario académico",
+        "ayuda":["Mostrar calendario académico",
             "Responde con una lista de próximos eventos en el calendario académico. " +
             "Si se le pasa como argumento un número devuelve esa cantidad de eventos. " +
             "Si se le pasa como argumento una fecha (dos números separados por una diagonal) devuelve todos los eventos hasta esa fecha inclusive. " +
-            "Si no se le pasa ningún argumento muestra hasta 10 eventos dentro de los próximos 7 días. " +
+            "Si no se le pasa ningún argumento muestra hasta 10 eventos dentro de los próximos 7 días.\n\n" +
             "Ejemplos: \"cal\" para ver hasta 10 eventos de la próxima semana ; \"cal 5\" para ver los próximos 5 eventos ; \"cal 10/5\" para ver los eventos hasta el 10 de mayo."
         ]
     },
@@ -747,8 +735,7 @@ comandos_validos = {
         "f_discord":c_gracias_discord,
         "f_telegram":c_gracias_telegram,
         "f_debug":c_gracias_debug,
-        "ayuda":[
-            "Agradecer",
+        "ayuda":["Agradecer",
             "Responde al agradecimiento."
         ]
     },
@@ -756,8 +743,7 @@ comandos_validos = {
         "f_discord":c_dalu_discord,
         "f_telegram":c_dalu_telegram,
         "f_debug":c_dalu_debug,
-        "ayuda":[
-            "Mail de Dalu",
+        "ayuda":["Mail de Dalu",
             "Responde con el mail de la Dirección de Estudiantes y Graduados (dalu)."
         ]
     },
@@ -766,8 +752,7 @@ comandos_validos = {
         "f_discord":c_test_discord,
         "f_telegram":c_test_telegram,
         "f_debug":c_test_debug,
-        "ayuda":[
-            "Test",
+        "ayuda":["Test",
             "Para debuggear."
         ]
     }
