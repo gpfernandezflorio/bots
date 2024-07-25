@@ -42,7 +42,14 @@ def proximos_eventos_ralondario(info={}):
   cantidad = info.get("cantidad", 10)
   monospace = info.get("monospace", False)
   recortar_en = info.get("recortar_en", "ambos") # puede ser "dias", "cantidad" o "ambos"
-  mensaje = "Próximos eventos:"
+  mensaje = info.get("titulo", None)
+  if mensaje is None:
+    if recortar_en == "dias":
+      mensaje = "Eventos de los próximos " + str(dias) + " días:"
+    elif recortar_en == "cantidad":
+      mensaje = "Próximos " + str(cantidad) + " eventos:"
+    else:
+      mensaje = "Próximos eventos:"
   eventos = []
   for evento in proximos_eventos(ID, cantidad, dias, recortar_en):
     nombre = formatear_nombre(evento['summary'], evento.get('description',''))
@@ -81,7 +88,7 @@ def proximos_eventos_ralondario(info={}):
 def proxima_tesis():
   res = []
   for evento in proximos_eventos(ID, 50, 0, "dias"):
-    if evento['summary'].startswith("Defensa de Tesis"):
+    if evento['summary'].lower().startswith("defensa de tesis"):
       hora = ""
       inicio = evento['start']
       if 'dateTime' in inicio:

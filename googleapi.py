@@ -100,7 +100,8 @@ def agregar_sin_repetidos_(src, mas):
 
 def esta_repetido_en(nuevo, eventos):
     for evento in eventos:
-        if evento['start']['date'] == nuevo['start']['date'] and evento['summary'] == nuevo['summary']:
+        if 'start' in evento and 'date' in evento['start'] and 'start' in nuevo and 'date' in nuevo['start'] \
+          and evento['start']['date'] == nuevo['start']['date'] and evento['summary'] == nuevo['summary']:
             return True
     return False
 

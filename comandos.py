@@ -560,8 +560,10 @@ def ralondario(args):
                     mes = int(fecha[1])
                     hoy = dia_de_hoy()
                     fecha = nueva_fecha(hoy.year, mes, dia)
+                    info["titulo"] = "Eventos hasta el " + str(dia) + "/" + str(mes)
                     if fecha < hoy:
                         fecha = fecha.replace(year = fecha.year + 1)
+                        info["titulo"] += "/" + str(fecha.year)
                     info["dias"] = (fecha - hoy).days
                     info["recortar_en"] = "dias"
                 except:
