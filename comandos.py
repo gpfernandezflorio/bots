@@ -173,6 +173,10 @@ def es_para_mi(msg):
         comando = msg[msg.find('>')+1:]
     elif msg[:4].lower() == "tina":
         comando = msg[4:]
+    elif msg[:5].lower() == "@tina":
+        comando = msg[5:]
+    elif msg[:13].lower() == "@mar_tina_bot":
+        comando = msg[13:]
     if not (comando is None):
         while len(comando) > 0 and comando[0] == ' ':
             comando = comando[1:]
