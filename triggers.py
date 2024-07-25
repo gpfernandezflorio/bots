@@ -52,6 +52,12 @@ def es_faq_nuevo_plan(txt):
 def faqs_nuevo_plan(txt):
     return '¿Tenés dudas sobre el cambio de plan?\nRevisá las FAQs de CubaWiki:\nhttps://www.cubawiki.com.ar/index.php/Faq/cursada/plan'
 
+def es_sobre_finales(txt):
+    txt_lower = txt.lower()
+    return 'finales' in txt_lower or ('final' in txt_lower and (
+      any(x in txt_lower for x in ['rendir','rindio','rindo','patea','pateo','fecha'])
+    ))
+
 triggers = [
     {"in": 'q onda?', "out": 'q onda?'},
     {"in": ['felicitaciones','felicidades','felicito','feliz','congrats','congratulation'],
@@ -62,5 +68,6 @@ triggers = [
     {"in": ['wifi','wi-fi','wi fi'],
       "out": "En el pabellón cero casi nunca anda el wi-fi pero acá tenés algunas opciones:\n\n*Red*:EVENTO\n*Contraseña*:UBA-2022\n\n*Red*:Comedor\n*Contraseña*:UBA1865!\n\n*Red*:UBA-WiFi\nEsta red es pública pero para tener conexión tenés que iniciar sesión con tu usuario de la UBA. Si todavía no lo creaste podés hacerlo desde https://wifi.uba.ar/ (habiéndote conectado a la red)."},
     {"in": ['secretaria','secretaría'],
-      "out": "La secretaría del DC atiende en la oficina 1502 del pabellón 0 de 13 a 20. No atienden por mail pero podés comunicarte abriendo un ticket en https://secretaria.dc.uba.ar/."}
+      "out": "La secretaría del DC atiende en la oficina 1502 del pabellón 0 de 13 a 20. No atienden por mail pero podés comunicarte abriendo un ticket en https://secretaria.dc.uba.ar/."},
+    {"in": es_sobre_finales, "out": "Recordatorio: ¡No cuelguen finales!"}
 ]
