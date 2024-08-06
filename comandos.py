@@ -761,12 +761,11 @@ comandos_validos = {
 }
 
 def imagen_proxima_tesis(tesis):
-    return "files/heman.jpg"
-    # tesista = tesis[0]
-    # hora_tesis = tesis[1]
-    # outfile = "tmp/"+tesista.replace(" ","_")+".png"
-    # imagen = imageDraw.abrir_imagen("files/heman.jpg")
-    # imagen.escribir(tesista, [120,120], tamaño=30, color=[255,255,255])
-    # imagen.escribir(hora_tesis, [450,170], tamaño=40, color=[255,255,255])
-    # imagen.guardar_imagen(outfile)
-    # return outfile
+    tesista = tesis[0]
+    hora_tesis = tesis[1]
+    outfile = "tmp/"+tesista.replace(" ","_")+".png"
+    imagen = imageDraw.abrir_imagen("files/heman.jpg")
+    imagen.escribir(tesista, [120,120], tamaño=30, color=[255,255,255])
+    imagen.escribir(hora_tesis, [450,170], tamaño=40, color=[255,255,255])
+    imagen.guardar_imagen(outfile)
+    return outfile
