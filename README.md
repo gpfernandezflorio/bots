@@ -8,6 +8,8 @@ Requerimientos:
 
 * pip install twx
 
+* pip install opencv-python
+
 Setup:
 
 - Crear un archivo .env que incluya las siguientes claves:
