@@ -6,7 +6,7 @@ from canales import obtener_canal
 from fechayhora import dia_de_hoy, nueva_fecha
 import tg
 import discord
-# import imageDraw
+import imageDraw
 
 urlPlanos = {
   '0':{
