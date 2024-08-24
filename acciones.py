@@ -62,17 +62,21 @@ async def realizar(accion):
 
 async def acciones_programadas():
     global eventos_siguientes
-    if len(eventos_siguientes) == 0:
-        eventos_siguientes = obtener_eventos_siguientes(listar_eventos())
-        if len(eventos_siguientes) == 0:
-            return
-    if corresponde(eventos_siguientes[0]):
-        print("NOW:")
-        for evento in eventos_siguientes[1:]:
-            print(" * " + evento["nombre"])
-            await realizar(evento["accion"])
-            # TODO: Si era un evento de una única vez, eliminarlo
-        eventos_siguientes = []
+    try:
+      if len(eventos_siguientes) == 0:
+          eventos_siguientes = obtener_eventos_siguientes(listar_eventos())
+          if len(eventos_siguientes) == 0:
+              return
+      if corresponde(eventos_siguientes[0]):
+          testing.logTxt("NOW:")
+          for evento in eventos_siguientes[1:]:
+              testing.logTxt(" * " + evento["nombre"])
+              await realizar(evento["accion"])
+              # TODO: Si era un evento de una única vez, eliminarlo
+          eventos_siguientes = []
+    except Exception as e:
+      testing.logExcp(e, "Error al procesar las acciones programadas")
+      return
 
 def conectar_sin_discord():
     inicializar_eventos()

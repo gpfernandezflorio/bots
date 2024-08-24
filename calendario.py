@@ -1,5 +1,6 @@
 import re
 from fechayhora import nueva_fecha_hora, justo_ahora, fecha_desde_str, nuevo_horario, delta_dias, dia_de_hoy
+import testing
 
 re_fecha_año = re.compile('\d{1,2}/\d{1,2}/\d{4}')      # dd/mm/aaaa            1/2/1995 3/12/2005 40/0/2020
 re_fecha = re.compile('\d{1,2}/\d{1,2}')                # dd/mm                 1/2 10/6 5/15 20/20
@@ -106,9 +107,9 @@ def obtener_eventos_siguientes(lista_de_eventos):
                 eventos = [evento]
             elif fecha_evento == proxima_fecha:
                 eventos.append(evento)
-    print("NEXT: " + str(proxima_fecha))
+    testing.logTxt("NEXT: " + str(proxima_fecha))
     for evento in eventos:
-        print(" * " + evento["nombre"])
+        testing.logTxt(" * " + evento["nombre"])
     return [proxima_fecha] + eventos
 
 def corresponde(cuando):

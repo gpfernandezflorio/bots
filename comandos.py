@@ -341,12 +341,10 @@ async def c_decir_discord(args, msg):
     if (len(args) < 2):
         await msg.channel.send("Faltan argumentos")
     else:
-        print(args[0])
         channel = obtener_canal(int(args[0]))
         if (channel is None):
             await msg.channel.send("Id de canal inválido")
         else:
-            print(channel)
             await channel[1].send(" ".join(args[1:]))
 
 def c_decir_telegram(args, msg):
@@ -526,7 +524,7 @@ def menu(args):
                     fecha = fecha.replace(year = fecha.year + 1)
                 info["fecha"] = fecha
             except Exception as e:
-                print(e)
+                testing.logExcp(e)
     return menu_comedor(info)
 
 async def c_ralondario_discord(args, msg):

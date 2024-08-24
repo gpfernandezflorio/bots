@@ -25,12 +25,9 @@ def recibir_mensajes():
     line = f.readline()
     f.close()
     ultima_actualizacion = int(line.strip(' \t\r\n'))
-  print("A")
   actualizaciones = bot.get_updates(offset=ultima_actualizacion + 1).wait()
-  print("B")
   if (actualizaciones is None) or (len(actualizaciones)==0):
     return []
-  print("C")
   f = open("last_update.txt", 'w')
   f.write(str(actualizaciones[-1].update_id) + '\n')
   f.close()

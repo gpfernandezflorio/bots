@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from random import random, randint
 import cv2
+import testing
 
 def abrir_imagen(ruta_imagen):
   return ImagenDibujable(ruta_imagen)
@@ -43,9 +44,9 @@ class ImagenDibujable:
 
   def guardar_imagen(self, ruta):
     try:
-        cv2.imwrite(ruta, self.img)
-    except:
-        print("Error al guardar imagen")
+      cv2.imwrite(ruta, self.img)
+    except Exception as e:
+      testing.logExcp(e, "Error al guardar imagen")
 
 def random_text(filein, text, imgsize, n, fileout):
   imagen = abrir_imagen(filein)

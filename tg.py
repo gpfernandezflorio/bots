@@ -16,7 +16,7 @@ def mandar_texto_revisando_ultimo_mensaje(chat_id, texto, respuesta_a=None):
     mandar_texto(chat_id, texto, respuesta_a)
 
 def mandar_texto(chat_id, texto, respuesta_a=None):
-    print("SEND")
+    testing.logTxt("SEND")
     #Llamar el metodo sendMessage del bot, passando el texto y la id del chat
     requests.get(URL + "sendMessage?text=" + texto + "&chat_id=" + str(chat_id) + "&reply_to_message_id=" + str(respuesta_a))
 
