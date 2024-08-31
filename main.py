@@ -4,19 +4,25 @@ from discord.ext import tasks
 from dotenv import load_dotenv
 from acciones import conectar_con_discord, conectar_sin_discord, conectar_debug, acciones_programadas, recibir_mensaje_discord, recibir_mensaje_telegram
 from fechayhora import justo_ahora
+from sync import sync_bloqueante as s
 import testing
 import asyncio
 import tg
 
 INICIADO = False
 
-async def una_vez_por_minuto():
+async def una_vez_por_minuto(c=None):
   # Recibir mensajes de TG:
-  for mensaje in tg.recibir_mensajes():
+  try:
+    mensajes = await s(c, tg.recibir_mensajes)
+  except Exception as e:
+    testing.logExcp(e, "Error al recibir los mensajes de Telegram")
+    return
+  for mensaje in mensajes:
     try:
-      recibir_mensaje_telegram(mensaje)
+      await s(c, recibir_mensaje_telegram, mensaje)
     except Exception as e:
-      testing.logExcp(e, "Error al recibir los mensajes de Telegram")
+      testing.logExcp(e, "Error al procesar un mensaje de Telegram")
       return
   await acciones_programadas()
 
@@ -39,7 +45,7 @@ def main_con_discord():
 
   @tasks.loop(minutes=1)
   async def una_vez_por_minuto_discord():
-    await una_vez_por_minuto()
+    await una_vez_por_minuto(client)
 
   @client.event
   async def on_message(message):
